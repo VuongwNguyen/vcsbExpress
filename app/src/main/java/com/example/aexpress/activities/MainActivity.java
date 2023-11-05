@@ -1,11 +1,14 @@
 package com.example.aexpress.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
+
+
         binding.searchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
@@ -66,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         initCategories();
         initProducts();
         initSlider();
+
     }
 
     private void initSlider() {
@@ -92,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log.e("err", response);
                     JSONObject mainObj = new JSONObject(response);
-                    if(mainObj.getString("status").equals("success")) {
+                    if (mainObj.getString("status").equals("success")) {
                         JSONArray categoriesArray = mainObj.getJSONArray("categories");
-                        for(int i =0; i< categoriesArray.length(); i++) {
+                        for (int i = 0; i < categoriesArray.length(); i++) {
                             JSONObject object = categoriesArray.getJSONObject(i);
                             Category category = new Category(
                                     object.getString("name"),
@@ -130,9 +136,9 @@ public class MainActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-                if(object.getString("status").equals("success")){
+                if (object.getString("status").equals("success")) {
                     JSONArray productsArray = object.getJSONArray("products");
-                    for(int i =0; i< productsArray.length(); i++) {
+                    for (int i = 0; i < productsArray.length(); i++) {
                         JSONObject childObj = productsArray.getJSONObject(i);
                         Product product = new Product(
                                 childObj.getString("name"),
@@ -151,7 +157,8 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> { });
+        }, error -> {
+        });
 
         queue.add(request);
     }
@@ -162,10 +169,10 @@ public class MainActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.GET, Constants.GET_OFFERS_URL, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-                if(object.getString("status").equals("success")) {
+                if (object.getString("status").equals("success")) {
                     JSONArray offerArray = object.getJSONArray("news_infos");
-                    for(int i =0; i < offerArray.length(); i++) {
-                        JSONObject childObj =  offerArray.getJSONObject(i);
+                    for (int i = 0; i < offerArray.length(); i++) {
+                        JSONObject childObj = offerArray.getJSONObject(i);
                         binding.carousel.addData(
                                 new CarouselItem(
                                         Constants.NEWS_IMAGE_URL + childObj.getString("image"),
@@ -177,7 +184,8 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> {});
+        }, error -> {
+        });
         queue.add(request);
     }
 
@@ -191,5 +199,6 @@ public class MainActivity extends AppCompatActivity {
         binding.productList.setLayoutManager(layoutManager);
         binding.productList.setAdapter(productAdapter);
     }
+
 
 }

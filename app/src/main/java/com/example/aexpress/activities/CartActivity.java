@@ -1,18 +1,18 @@
 package com.example.aexpress.activities;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.aexpress.R;
 import com.example.aexpress.adapters.CartAdapter;
-import com.example.aexpress.adapters.SwipeItemTouchHelper;
 import com.example.aexpress.databinding.ActivityCartBinding;
 import com.example.aexpress.model.Product;
 import com.hishd.tinycart.model.Cart;
@@ -62,8 +62,23 @@ public class CartActivity extends AppCompatActivity {
 
         binding.subtotal.setText(String.format("PKR %.2f",cart.getTotalPrice()));
 
-        ItemTouchHelper.Callback callback = new SwipeItemTouchHelper(adapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                adapter.removeItem(viewHolder.getAdapterPosition());
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.cartList);
         binding.continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
