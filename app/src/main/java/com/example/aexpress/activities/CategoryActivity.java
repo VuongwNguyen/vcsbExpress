@@ -73,7 +73,8 @@ public class CategoryActivity extends AppCompatActivity {
                                 childObj.getDouble("price"),
                                 childObj.getDouble("price_discount"),
                                 childObj.getInt("stock"),
-                                childObj.getInt("id")
+                                childObj.getInt("id"),
+                                childObj.getString("description")
                         );
                         products.add(product);
                     }

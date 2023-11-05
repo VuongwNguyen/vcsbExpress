@@ -66,7 +66,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cart.addItem(currentProduct,1);
+                cart.addItem(product,1);
                 binding.addToCartBtn.setEnabled(false);
                 binding.addToCartBtn.setText("Added in cart");
             }
