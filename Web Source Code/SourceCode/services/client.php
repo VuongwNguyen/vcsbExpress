@@ -116,7 +116,7 @@ class CLIENT extends REST{
 
         $object_res = array();
         foreach ($products as $r){
-            unset($r['description']);
+            // unset($r['description']);
             array_push($object_res, $r);
         }
         $count = count($products);
