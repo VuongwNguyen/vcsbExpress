@@ -1,15 +1,14 @@
 package com.example.aexpress.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,14 +24,21 @@ import com.example.aexpress.utils.Constants;
 import com.hishd.tinycart.model.Cart;
 import com.hishd.tinycart.util.TinyCartHelper;
 
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
 
     ActivityProductDetailBinding binding;
     Product currentProduct;
+
+    Cart cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +48,26 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        Product product = (Product)  bundle.getSerializable("product");
+        Product product = (Product) bundle.getSerializable("product");
 
         String name = product.getName();
         String image = product.getImage();
         String description = product.getDescription();
-        double price = getIntent().getDoubleExtra("price",0);
+        double price = product.getPrice();
+        double discount = product.getDiscount();
+        Locale locale = new Locale("vi","VN");
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+        binding.tvNameProduct.setText(Html.fromHtml(name));
+        binding.tvPriceProduct.setText(Html.fromHtml(String.valueOf(numberFormat.format(price - discount)+" VNĐ")));
+        binding.tvDiscountProduct.setText(Html.fromHtml("<s>"+String.valueOf(numberFormat.format(price)+" VNĐ</s>")));
 
         Glide.with(this)
                 .load(image)
                 .into(binding.productImage);
 
-        binding.productDescription.setText( Html.fromHtml(description));
+        binding.productDescription.setText(Html.fromHtml(description));
 //        getProductDetails(id);
-
+//        initImagesProduct(product.getId());
         getSupportActionBar().setTitle(name);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -66,7 +78,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cart.addItem(product,1);
+                cart.addItem(product, 1);
                 binding.addToCartBtn.setEnabled(false);
                 binding.addToCartBtn.setText("Added in cart");
             }
@@ -81,7 +93,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.cart) {
+        if (item.getItemId() == R.id.cart) {
             startActivity(new Intent(this, CartActivity.class));
         }
         return super.onOptionsItemSelected(item);
@@ -97,13 +109,12 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
-                    if(object.getString("status").equals("success")) {
+                    if (object.getString("status").equals("success")) {
                         JSONObject product = object.getJSONObject("product");
                         String description = product.getString("description");
                         binding.productDescription.setText(
                                 Html.fromHtml(description)
                         );
-
                         currentProduct = new Product(
                                 product.getString("name"),
                                 Constants.PRODUCTS_IMAGE_URL + product.getString("image"),
@@ -113,7 +124,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 product.getInt("stock"),
                                 product.getInt("id")
                         );
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -128,6 +138,30 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         queue.add(request);
     }
+//    void initImagesProduct(int id){
+//        RequestQueue queue = Volley.newRequestQueue(this);
+//
+//        StringRequest request = new StringRequest(Request.Method.GET, Constants.GET_IMAGES_PRODUCT_URL+id, response -> {
+//            try {
+//                JSONObject object = new JSONObject(response);
+//                if (object.getString("status").equals("success")) {
+//                    JSONArray offerArray = object.getJSONArray("images");
+//                    for (int i = 0; i < offerArray.length(); i++) {
+//                        JSONObject childObj = offerArray.getJSONObject(i);
+//                        binding.carousel.addData(
+//                                new CarouselItem(
+//                                        Constants.PRODUCTS_IMAGE_URL + childObj.getString("name")
+//                                )
+//                        );
+//                    }
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }, error -> {
+//        });
+//        queue.add(request);
+//    }
 
     @Override
     public boolean onSupportNavigateUp() {
