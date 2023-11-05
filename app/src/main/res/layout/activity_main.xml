@@ -26,6 +26,7 @@
             app:mt_hint="Search your favorite product"
             app:mt_placeholder="aExpress"
             app:mt_navIconEnabled="true"
+            app:mt_menuIconDrawable="@drawable/ic_cart"
             app:mt_maxSuggestionsCount="10"
             app:mt_speechMode="true" />
     </LinearLayout>

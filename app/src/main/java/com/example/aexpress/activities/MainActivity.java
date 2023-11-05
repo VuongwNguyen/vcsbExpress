@@ -30,6 +30,8 @@ import com.example.aexpress.databinding.ActivityMainBinding;
 import com.example.aexpress.model.Category;
 import com.example.aexpress.model.Product;
 import com.example.aexpress.utils.Constants;
+import com.hishd.tinycart.model.Cart;
+import com.hishd.tinycart.util.TinyCartHelper;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
@@ -47,15 +49,14 @@ public class MainActivity extends AppCompatActivity {
     ProductAdapter productAdapter;
     ArrayList<Product> products;
 
+    Cart cart;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
-
-
+            cart = TinyCartHelper.getCart();
         binding.searchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
@@ -73,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
             public void onButtonClicked(int buttonCode) {
                 if (buttonCode == MaterialSearchBar.BUTTON_SPEECH) {
                     startTextFromSpeech();
+                } else if (buttonCode == MaterialSearchBar.BUTTON_NAVIGATION) {
+                    startActivity(new Intent(MainActivity.this,CartActivity.class));
                 }
             }
         });
@@ -199,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
     void initProducts() {
         products = new ArrayList<>();
-        productAdapter = new ProductAdapter(this, products);
+        productAdapter = new ProductAdapter(this, products, cart);
 
         getRecentProducts();
 
