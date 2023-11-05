@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     CategoryAdapter categoryAdapter;
     ArrayList<Category> categories;
-
     ProductAdapter productAdapter;
     ArrayList<Product> products;
 
