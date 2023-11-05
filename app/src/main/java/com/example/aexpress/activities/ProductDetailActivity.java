@@ -40,16 +40,21 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding = ActivityProductDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        String name = getIntent().getStringExtra("name");
-        String image = getIntent().getStringExtra("image");
-        int id = getIntent().getIntExtra("id",0);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        Product product = (Product)  bundle.getSerializable("product");
+
+        String name = product.getName();
+        String image = product.getImage();
+        String description = product.getDescription();
         double price = getIntent().getDoubleExtra("price",0);
 
         Glide.with(this)
                 .load(image)
                 .into(binding.productImage);
 
-        getProductDetails(id);
+        binding.productDescription.setText( Html.fromHtml(description));
+//        getProductDetails(id);
 
         getSupportActionBar().setTitle(name);
 

@@ -42,7 +42,6 @@ public class CartActivity extends AppCompatActivity {
             Product product = (Product) item.getKey();
             int quantity = item.getValue();
             product.setQuantity(quantity);
-
             products.add(product);
         }
 

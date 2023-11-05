@@ -2,6 +2,7 @@ package com.example.aexpress.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,11 +47,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
                 Intent intent = new Intent(context, ProductDetailActivity.class);
-                intent.putExtra("name", product.getName());
-                intent.putExtra("image", product.getImage());
-                intent.putExtra("id", product.getId());
-                intent.putExtra("price", product.getPrice());
+                bundle.putSerializable("product",product);
+                intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });

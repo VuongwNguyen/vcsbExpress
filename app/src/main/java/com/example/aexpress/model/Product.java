@@ -6,10 +6,21 @@ import java.math.BigDecimal;
 
 public class Product implements Item, Serializable {
 
-    private String name, image, status;
+    private String name, image, status, description;
     private double price, discount;
     private int stock, id;
     private int quantity;
+
+    public Product(String name, String image, String status, double price, double discount, int stock, int id, String description) {
+        this.name = name;
+        this.image = image;
+        this.status = status;
+        this.price = price;
+        this.discount = discount;
+        this.stock = stock;
+        this.id = id;
+        this.description = description;
+    }
 
     public Product(String name, String image, String status, double price, double discount, int stock, int id) {
         this.name = name;
@@ -19,6 +30,7 @@ public class Product implements Item, Serializable {
         this.discount = discount;
         this.stock = stock;
         this.id = id;
+        this.quantity = quantity;
     }
 
     public String getName() {
@@ -93,5 +105,13 @@ public class Product implements Item, Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
