@@ -81,7 +81,8 @@ public class FragmentHome extends Fragment {
                                 childObj.getDouble("price"),
                                 childObj.getDouble("price_discount"),
                                 childObj.getInt("stock"),
-                                childObj.getInt("id")
+                                childObj.getInt("id"),
+                                childObj.getString("description")
 
                         );
                         products.add(product);
