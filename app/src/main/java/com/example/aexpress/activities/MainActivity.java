@@ -28,6 +28,7 @@ import com.example.aexpress.R;
 import com.example.aexpress.adapters.CategoryAdapter;
 import com.example.aexpress.adapters.ProductAdapter;
 import com.example.aexpress.databinding.ActivityMainBinding;
+import com.example.aexpress.fragments.FragmentCart;
 import com.example.aexpress.fragments.FragmentCategory;
 import com.example.aexpress.fragments.FragmentHome;
 import com.example.aexpress.model.Category;
@@ -51,15 +52,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
-        binding.icCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CartActivity.class));
-            }
-        });
-
+        
 
         binding.searchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
@@ -91,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new FragmentCategory());
                     return true;
                 case R.id.cart:
-
+                    replaceFragment(new FragmentCart());
                     return true;
             }
             return false;

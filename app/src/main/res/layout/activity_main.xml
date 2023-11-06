@@ -30,14 +30,6 @@
             app:mt_menuIconDrawable="@drawable/ic_cart"
             app:mt_maxSuggestionsCount="10"
             app:mt_speechMode="true" />
-
-        <ImageView
-            android:id="@+id/icCart"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:src="@drawable/ic_shop"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

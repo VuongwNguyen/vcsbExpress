@@ -2,15 +2,10 @@ package com.example.aexpress.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,17 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.aexpress.R;
-import com.example.aexpress.activities.CartActivity;
 import com.example.aexpress.databinding.ItemCartBinding;
-import com.example.aexpress.databinding.ItemCategoriesBinding;
-import com.example.aexpress.databinding.ItemProductBinding;
 import com.example.aexpress.databinding.QuantityDialogBinding;
 import com.example.aexpress.model.Product;
 import com.hishd.tinycart.model.Cart;
 import com.hishd.tinycart.util.TinyCartHelper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
@@ -136,11 +127,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             }
         });
     }
-    public void removeItem(int position){
-        cart.removeItem(products.remove(position));
+    public void removeItem(int position) {
+            Product productToRemove = products.get(position);
+            cart.removeItem(productToRemove);
+            products.remove(position);
+            notifyItemRemoved(position);
+            notifyDataSetChanged();
+    }
+
+    public void restoreItem(Product product, int position) {
+        cart.addItem(product, product.getQuantity());
+        products.add(position, product);
+        notifyItemInserted(position);
+        notifyItemRangeChanged(position, products.size());
         notifyDataSetChanged();
-        notifyItemRemoved(position);
-        cartListener.onQuantityChanged();
     }
     @Override
     public int getItemCount() {

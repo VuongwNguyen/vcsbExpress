@@ -1,66 +1,135 @@
 package com.example.aexpress.fragments;
 
+import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.aexpress.R;
+import com.example.aexpress.activities.CheckoutActivity;
+import com.example.aexpress.adapters.CartAdapter;
+import com.example.aexpress.databinding.FragmentCartBinding;
+import com.example.aexpress.model.Product;
+import com.google.android.material.snackbar.Snackbar;
+import com.hishd.tinycart.model.Cart;
+import com.hishd.tinycart.model.Item;
+import com.hishd.tinycart.util.TinyCartHelper;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentCart#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.Map;
+
 public class FragmentCart extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private FragmentCartBinding binding;
+    CartAdapter adapter;
+    ArrayList<Product> products;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Product recentlyDeletedProduct;
+    private int recentlyDeletedProductPosition;
 
     public FragmentCart() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentCart.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentCart newInstance(String param1, String param2) {
-        FragmentCart fragment = new FragmentCart();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+        binding = FragmentCartBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        products = new ArrayList<>();
+
+        Cart cart = TinyCartHelper.getCart();
+
+        for(Map.Entry<Item, Integer> item : cart.getAllItemsWithQty().entrySet()) {
+            Product product = (Product) item.getKey();
+            int quantity = item.getValue();
+            product.setQuantity(quantity);
+            products.add(product);
+        }
+
+        adapter = new CartAdapter(getContext(), products, new CartAdapter.CartListener() {
+            @Override
+            public void onQuantityChanged() {
+                binding.subtotal.setText(String.format("%.2f VNĐ",cart.getTotalPrice()));
+            }
+        });
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), layoutManager.getOrientation());
+        binding.cartList.setLayoutManager(layoutManager);
+        binding.cartList.addItemDecoration(itemDecoration);
+        binding.cartList.setAdapter(adapter);
+
+
+        binding.subtotal.setText(String.format("PKR %.2f",cart.getTotalPrice()));
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                // Lưu trữ thông tin về item bị xóa
+                recentlyDeletedProductPosition = viewHolder.getAdapterPosition();
+                recentlyDeletedProduct = products.get(recentlyDeletedProductPosition);
+
+                // Xóa item khỏi danh sách
+                adapter.removeItem(recentlyDeletedProductPosition);
+
+                // Hiển thị Snackbar để cho phép khôi phục
+                Snackbar snackbar = Snackbar.make(requireView(), recentlyDeletedProduct.getName()+" removed", Snackbar.LENGTH_LONG);
+                snackbar.setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Khôi phục item
+                        adapter.restoreItem(recentlyDeletedProduct, recentlyDeletedProductPosition);
+
+                        // Cập nhật lại subtotal khi item được khôi phục
+                        binding.subtotal.setText(String.format("PKR %.2f", cart.getTotalPrice()));
+                    }
+                });
+                snackbar.show();
+
+                // Cập nhật lại subtotal
+                binding.subtotal.setText(String.format("PKR %.2f", cart.getTotalPrice()));
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(binding.cartList);
+        binding.continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), CheckoutActivity.class));
+            }
+        });
     }
 }
