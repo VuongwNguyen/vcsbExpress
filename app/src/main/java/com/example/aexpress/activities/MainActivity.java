@@ -13,6 +13,9 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.android.volley.Request;
@@ -21,9 +24,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.aexpress.R;
 import com.example.aexpress.adapters.CategoryAdapter;
 import com.example.aexpress.adapters.ProductAdapter;
 import com.example.aexpress.databinding.ActivityMainBinding;
+import com.example.aexpress.fragments.FragmentCategory;
+import com.example.aexpress.fragments.FragmentHome;
 import com.example.aexpress.model.Category;
 import com.example.aexpress.model.Product;
 import com.example.aexpress.utils.Constants;
@@ -67,6 +73,28 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        binding.bottomnavigation.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.home:
+                    replaceFragment(new FragmentHome());
+                    return true;
+                case R.id.categories:
+                    replaceFragment(new FragmentCategory());
+                    return true;
+                case R.id.cart:
+
+                    return true;
+            }
+            return false;
+        });
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment, fragment);
+        fragmentTransaction.commit();
     }
 
     private void startTextFromSpeech() {
