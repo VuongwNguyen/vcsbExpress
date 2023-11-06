@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,19 +8,20 @@
     tools:context=".activities.ProductDetailActivity">
 
     <TextView
-        android:textAlignment="center"
-        android:background="@color/orange"
         android:id="@+id/tv_NameProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:background="@color/orange"
         android:padding="7sp"
+        android:textAlignment="center"
+        android:textSize="25sp"
         android:textStyle="bold" />
+
     <LinearLayout
-        android:layout_below="@id/tv_NameProduct"
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tv_NameProduct"
         android:orientation="vertical"
         android:padding="10sp">
 
@@ -29,28 +29,26 @@
             android:id="@+id/productImage"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:scaleType="fitCenter"
             tools:srcCompat="@drawable/placeholder" />
 
-
-
         <LinearLayout
-            android:padding="7sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:padding="7sp">
 
             <TextView
-                android:textStyle="bold"
                 android:id="@+id/tv_PriceProduct"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Now Price"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_DiscountProduct"
@@ -73,20 +71,44 @@
         </ScrollView>
     </LinearLayout>
 
-<ImageView
-    android:layout_width="wrap_content"
-    android:src="@drawable/ic_close"
-    android:id="@+id/iv_delete"
-    android:layout_height="wrap_content"
-    android:layout_margin="5sp"
-    android:layout_alignParentEnd="true"
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="5sp"
+        android:src="@drawable/ic_close" />
 
-    />
-    <Button
-        android:id="@+id/addToCartBtn"
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayout"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="3.5"
+        android:stepSize="0.1" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout"
-        android:background="@color/orange"
-        android:text="Add to Cart" />
+        android:layout_below="@id/ratingBar">
+
+        <TextView
+            android:id="@+id/tvStock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="Current also:"
+            android:textColor="@color/orange"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/addToCartBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            android:text="Add to Cart" />
+
+    </LinearLayout>
 </RelativeLayout>

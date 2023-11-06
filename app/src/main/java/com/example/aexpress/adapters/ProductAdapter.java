@@ -1,6 +1,7 @@
 package com.example.aexpress.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableResource;
 import com.example.aexpress.R;
 import com.example.aexpress.databinding.DetailsProductDialogBinding;
 import com.example.aexpress.databinding.ItemProductBinding;
@@ -48,7 +50,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .into(holder.binding.image);
         holder.binding.label.setText(product.getName());
         holder.binding.price.setText(product.getPrice()-product.getDiscount()+" VNĐ");
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,6 +60,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 detailsProductDialogBinding.productDescription.setText(Html.fromHtml(product.getDescription()));
                 detailsProductDialogBinding.tvPriceProduct.setText(product.getPrice() - product.getDiscount() + " VNĐ");
                 detailsProductDialogBinding.tvDiscountProduct.setText(Html.fromHtml("<s>" + product.getPrice() + " VNĐ</s>"));
+                detailsProductDialogBinding.tvStock.setText("Current also: "+product.getStock()+" Cups");
+                detailsProductDialogBinding.ratingBar.setRating((float) Math.random()*5);
                 Glide.with(detailsProductDialogBinding.getRoot()).load(product.getImage())
                         .into(detailsProductDialogBinding.productImage);
                 detailsProductDialogBinding.ivDelete.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +83,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                         cart.addItem(product,1);
                         detailsProductDialogBinding.addToCartBtn.setEnabled(false);
                         detailsProductDialogBinding.addToCartBtn.setText("Added in cart");
+                        dialog.dismiss();
                     }
                 });
                 dialog.show();
