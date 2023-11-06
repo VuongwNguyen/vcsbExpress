@@ -25,7 +25,9 @@ import com.hishd.tinycart.model.Cart;
 import com.hishd.tinycart.model.Item;
 import com.hishd.tinycart.util.TinyCartHelper;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 
 public class FragmentCart extends Fragment {
@@ -57,6 +59,7 @@ public class FragmentCart extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Locale locale = new Locale("vi","VN");
 
         products = new ArrayList<>();
 
@@ -68,11 +71,11 @@ public class FragmentCart extends Fragment {
             product.setQuantity(quantity);
             products.add(product);
         }
-
         adapter = new CartAdapter(getContext(), products, new CartAdapter.CartListener() {
             @Override
             public void onQuantityChanged() {
-                binding.subtotal.setText(String.format("%.2f VNĐ",cart.getTotalPrice()));
+
+                binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));
             }
         });
 
@@ -82,8 +85,7 @@ public class FragmentCart extends Fragment {
         binding.cartList.addItemDecoration(itemDecoration);
         binding.cartList.setAdapter(adapter);
 
-
-        binding.subtotal.setText(String.format("PKR %.2f",cart.getTotalPrice()));
+        binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -109,13 +111,13 @@ public class FragmentCart extends Fragment {
                         adapter.restoreItem(recentlyDeletedProduct, recentlyDeletedProductPosition);
 
                         // Cập nhật lại subtotal khi item được khôi phục
-                        binding.subtotal.setText(String.format("PKR %.2f", cart.getTotalPrice()));
+                        binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));
                     }
                 });
                 snackbar.show();
 
                 // Cập nhật lại subtotal
-                binding.subtotal.setText(String.format("PKR %.2f", cart.getTotalPrice()));
+                binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));
             }
 
             @Override

@@ -5,7 +5,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -16,30 +15,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.aexpress.R;
-import com.example.aexpress.adapters.CategoryAdapter;
-import com.example.aexpress.adapters.ProductAdapter;
+
 import com.example.aexpress.databinding.ActivityMainBinding;
 import com.example.aexpress.fragments.FragmentCart;
 import com.example.aexpress.fragments.FragmentCategory;
 import com.example.aexpress.fragments.FragmentHome;
-import com.example.aexpress.model.Category;
-import com.example.aexpress.model.Product;
-import com.example.aexpress.utils.Constants;
+
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
-import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import java.util.ArrayList;
 
@@ -74,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        replaceFragment(new FragmentHome());
         binding.bottomnavigation.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:

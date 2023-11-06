@@ -20,8 +20,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.aexpress.R;
 import com.example.aexpress.adapters.CategoryAdapter;
+import com.example.aexpress.adapters.ProductAdapter;
 import com.example.aexpress.databinding.FragmentCategoryBinding;
 import com.example.aexpress.model.Category;
+import com.example.aexpress.model.Product;
 import com.example.aexpress.utils.Constants;
 
 import org.json.JSONArray;
@@ -34,6 +36,9 @@ public class FragmentCategory extends Fragment {
     private FragmentCategoryBinding binding;
     CategoryAdapter categoryAdapter;
     ArrayList<Category> categories;
+
+    ArrayList<Product> products;
+    ProductAdapter productAdapter;
 
     public FragmentCategory() {
     }
@@ -55,22 +60,25 @@ public class FragmentCategory extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        products =new ArrayList<>();
+        productAdapter = new ProductAdapter(getContext(),products);
         initCategories();
+        getRecentProducts();
+        binding.listDetailsCategories.setLayoutManager(new GridLayoutManager(getContext(),2));
+        binding.listDetailsCategories.setAdapter(productAdapter);
     }
 
     void initCategories() {
         categories = new ArrayList<>();
-        categoryAdapter = new CategoryAdapter(getContext(), categories);
-
         getCategories();
+        categoryAdapter = new CategoryAdapter(getContext(), categories,binding.listDetailsCategories);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
         binding.categoriesList.setLayoutManager(layoutManager);
         binding.categoriesList.setAdapter(categoryAdapter);
     }
 
-    void getCategories() {
+    public void getCategories() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
         StringRequest request = new StringRequest(Request.Method.GET, Constants.GET_CATEGORIES_URL, new Response.Listener<String>() {
@@ -106,6 +114,38 @@ public class FragmentCategory extends Fragment {
 
             }
         });
+
+        queue.add(request);
+    }
+    public void getRecentProducts() {
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+
+        String url = Constants.GET_PRODUCTS_URL + "?count=200";
+        StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
+            try {
+                JSONObject object = new JSONObject(response);
+                if(object.getString("status").equals("success")){
+                    JSONArray productsArray = object.getJSONArray("products");
+                    for(int i =0; i< productsArray.length(); i++) {
+                        JSONObject childObj = productsArray.getJSONObject(i);
+                        Product product = new Product(
+                                childObj.getString("name"),
+                                Constants.PRODUCTS_IMAGE_URL + childObj.getString("image"),
+                                childObj.getString("status"),
+                                childObj.getDouble("price"),
+                                childObj.getDouble("price_discount"),
+                                childObj.getInt("stock"),
+                                childObj.getInt("id"),
+                                childObj.getString("description")
+                        );
+                        products.add(product);
+                    }
+                    productAdapter.notifyDataSetChanged();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> { });
 
         queue.add(request);
     }

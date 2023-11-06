@@ -63,7 +63,7 @@ public class FragmentHome extends Fragment {
         getRecentOffers();
     }
 
-    void getRecentProducts() {
+   public void getRecentProducts() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
         String url = Constants.GET_PRODUCTS_URL + "?count=8";
@@ -81,8 +81,8 @@ public class FragmentHome extends Fragment {
                                 childObj.getDouble("price"),
                                 childObj.getDouble("price_discount"),
                                 childObj.getInt("stock"),
-                                childObj.getInt("id")
-
+                                childObj.getInt("id"),
+                                childObj.getString("description")
                         );
                         products.add(product);
                     }
