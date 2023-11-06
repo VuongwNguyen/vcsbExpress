@@ -47,18 +47,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .load(product.getImage())
                 .into(holder.binding.image);
         holder.binding.label.setText(product.getName());
-        holder.binding.price.setText(product.getPrice()+" VNĐ");
+        holder.binding.price.setText(product.getPrice()-product.getDiscount()+" VNĐ");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Bundle bundle = new Bundle();
-//                Intent intent = new Intent(context, ProductDetailActivity.class);
-//                bundle.putSerializable("product",product);
-//                intent.putExtras(bundle);
-//                context.startActivity(intent);
                 DetailsProductDialogBinding detailsProductDialogBinding = DetailsProductDialogBinding.inflate(LayoutInflater.from(context));
-
                 AlertDialog dialog = new AlertDialog.Builder(context).
                         setView(detailsProductDialogBinding.getRoot()).create();
                 detailsProductDialogBinding.tvNameProduct.setText(product.getName());
@@ -73,7 +67,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                         dialog.dismiss();
                     }
                 });
-
                 if (checkContainKey(product) != null) {
                     detailsProductDialogBinding.addToCartBtn.setText("Added in cart");
                     detailsProductDialogBinding.addToCartBtn.setEnabled(false);
@@ -81,7 +74,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     detailsProductDialogBinding.addToCartBtn.setText("Add to cart");
                     detailsProductDialogBinding.addToCartBtn.setEnabled(true);
                 }
-
                 detailsProductDialogBinding.addToCartBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

@@ -80,7 +80,7 @@ public class CheckoutActivity extends AppCompatActivity {
         adapter = new CartAdapter(this, products, new CartAdapter.CartListener() {
             @Override
             public void onQuantityChanged() {
-                binding.subtotal.setText(String.format("PKR %.2f",cart.getTotalPrice()));
+                binding.subtotal.setText(String.format("%.2f",cart.getTotalPrice()+" VNĐ"));
             }
         });
 
