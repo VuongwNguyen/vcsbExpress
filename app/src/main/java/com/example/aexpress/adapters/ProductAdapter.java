@@ -16,25 +16,22 @@ import com.example.aexpress.databinding.DetailsProductDialogBinding;
 import com.example.aexpress.databinding.ItemProductBinding;
 import com.example.aexpress.model.Product;
 import com.hishd.tinycart.model.Cart;
+import com.hishd.tinycart.model.Item;
+import com.hishd.tinycart.util.TinyCartHelper;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     Context context;
     ArrayList<Product> products;
-
     Cart cart;
 
     public ProductAdapter(Context context, ArrayList<Product> products) {
         this.context = context;
         this.products = products;
-    }
-
-    public ProductAdapter(Context context, ArrayList<Product> products, Cart cart) {
-        this.context = context;
-        this.products = products;
-        this.cart = cart;
+        cart = TinyCartHelper.getCart();
     }
 
     @NonNull
@@ -76,6 +73,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                         dialog.dismiss();
                     }
                 });
+
+                if (checkContainKey(product) != null) {
+                    detailsProductDialogBinding.addToCartBtn.setText("Added in cart");
+                    detailsProductDialogBinding.addToCartBtn.setEnabled(false);
+                } else {
+                    detailsProductDialogBinding.addToCartBtn.setText("Add to cart");
+                    detailsProductDialogBinding.addToCartBtn.setEnabled(true);
+                }
+
                 detailsProductDialogBinding.addToCartBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -102,5 +108,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             super(itemView);
             binding = ItemProductBinding.bind(itemView);
         }
+    }
+
+    private Product checkContainKey(Product product) {
+        for (Map.Entry<Item, Integer> item : cart.getAllItemsWithQty().entrySet()) {
+            Product product1 = (Product) item.getKey();
+            if (product1.getId() == product.getId()) {
+                return product1;
+            }
+        }
+        return null;
     }
 }

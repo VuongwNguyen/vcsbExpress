@@ -5,11 +5,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,10 +36,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class CheckoutActivity extends AppCompatActivity {
 
@@ -93,11 +98,101 @@ public class CheckoutActivity extends AppCompatActivity {
         binding.checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                processOrder();
+                if (checkValidate()) {
+                    processOrder();
+                } else {
+                    Toast.makeText(CheckoutActivity.this, "Please fill out the form completely", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        binding.dateBox.setFocusable(false);
+        binding.dateBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DATE);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(CheckoutActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
+                                // Xử lý ngày đã chọn
+                                calendar.set(year, month, dayOfMonth);
+                                Locale vietnameseLocale = new Locale("vi", "VN");
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", vietnameseLocale);
+                                String formattedDate = sdf.format(calendar.getTime());
+                                binding.dateBox.setText(formattedDate);
+                            }
+                        }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+    }
+
+    private boolean checkValidate() {
+        boolean checkName, checkEmail, checkPhone, checkAddress, checkDate;
+        Pattern numberRegex = Pattern.compile("^0+[0-9]{9}$");
+        Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+        String name = binding.nameBox.getText().toString();
+        String email = binding.emailBox.getText().toString();
+        String phone = binding.phoneBox.getText().toString();
+        String address = binding.addressBox.getText().toString();
+        String date = binding.dateBox.getText().toString();
+        String comment = binding.commentBox.getText().toString();
+
+        if (name.equals("")) {
+            binding.nameBox.setError("Name is required");
+            checkName = false;
+        } else {
+            checkName = true;
+            binding.nameBox.setError(null);
+        }
+
+        if (email.equals("")) {
+            binding.emailBox.setError("Email is required");
+            checkEmail = false;
+        } else if (!emailRegex.matcher(email).matches()) {
+            binding.emailBox.setError("Invalid email address format");
+            checkEmail = false;
+        } else {
+            binding.emailBox.setError(null);
+            checkEmail = true;
+        }
+
+        if (phone.equals("")) {
+            binding.phoneBox.setError("Phone Number is required");
+            checkPhone = false;
+        } else if (!numberRegex.matcher(phone).matches()) {
+            binding.phoneBox.setError("Invalid phone number format");
+            checkPhone = false;
+        } else {
+            binding.phoneBox.setError(null);
+            checkPhone = true;
+        }
+
+        if (address.equals("")) {
+            binding.addressBox.setError("Address is required");
+            checkAddress = false;
+        } else {
+            binding.addressBox.setError(null);
+            checkAddress = true;
+        }
+
+        if (date.equals("")) {
+            binding.dateBox.setError("Date is required");
+            checkDate = false;
+        } else {
+            binding.dateBox.setError(null);
+            checkDate = true;
+        }
+
+        return checkName && checkPhone && checkDate && checkEmail && checkAddress;
     }
 
     void processOrder() {
@@ -107,7 +202,6 @@ public class CheckoutActivity extends AppCompatActivity {
         JSONObject productOrder = new JSONObject();
         JSONObject dataObject = new JSONObject();
         try {
-
             productOrder.put("address",binding.addressBox.getText().toString());
             productOrder.put("buyer",binding.nameBox.getText().toString());
             productOrder.put("comment", binding.commentBox.getText().toString());

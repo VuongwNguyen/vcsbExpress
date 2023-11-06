@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/orange"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,13 +21,22 @@
         <com.mancj.materialsearchbar.MaterialSearchBar
             android:id="@+id/searchBar"
             style="@style/MaterialSearchBarLight"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:mt_hint="Search your favorite product"
             app:mt_placeholder="aExpress"
+            android:layout_weight="5"
             app:mt_navIconEnabled="true"
             app:mt_maxSuggestionsCount="10"
             app:mt_speechMode="true" />
+
+        <ImageView
+            android:id="@+id/icCart"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@drawable/ic_shop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
