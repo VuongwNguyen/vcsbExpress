@@ -1,6 +1,7 @@
 package com.example.aexpress.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.hishd.tinycart.model.Cart;
 import com.hishd.tinycart.model.Item;
 import com.hishd.tinycart.util.TinyCartHelper;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -29,6 +31,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     Context context;
     ArrayList<Product> products;
     Cart cart;
+    DecimalFormat decimalFormat;
 
     public ProductAdapter(Context context, ArrayList<Product> products) {
         this.context = context;
@@ -52,7 +55,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .load(product.getImage())
                 .into(holder.binding.image);
         holder.binding.label.setText(product.getName());
-        holder.binding.price.setText(product.getPrice()-product.getDiscount()+" VNĐ");
+
+        double price = product.getPrice() - product.getDiscount();
+        decimalFormat = new DecimalFormat("#,### VNĐ"); // Làm tròn số và thêm đơn vị tiền tệ
+        String formattedPrice = decimalFormat.format(price);
+        holder.binding.price.setText(formattedPrice);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +75,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 detailsProductDialogBinding.ratingBar.setRating((float) Math.random()*5);
                 Glide.with(detailsProductDialogBinding.getRoot()).load(product.getImage()).into(detailsProductDialogBinding.productImage);
 
+                detailsProductDialogBinding.tvPriceProduct.setText(decimalFormat.format(product.getPrice() - product.getDiscount()) + " VNĐ");
+                detailsProductDialogBinding.tvDiscountProduct.setText(Html.fromHtml("<s>" + decimalFormat.format(product.getPrice()) + " VNĐ</s>"));
+                detailsProductDialogBinding.tvStock.setText("Current also: " + product.getStock() + " Cups");
+                detailsProductDialogBinding.ratingBar.setRating((float) Math.random() * 5);
+                Glide.with(detailsProductDialogBinding.getRoot()).load(product.getImage())
+                        .into(detailsProductDialogBinding.productImage);
                 detailsProductDialogBinding.ivDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -83,7 +97,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 detailsProductDialogBinding.addToCartBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        cart.addItem(product,1);
+                        cart.addItem(product, 1);
                         detailsProductDialogBinding.addToCartBtn.setEnabled(false);
                         detailsProductDialogBinding.addToCartBtn.setText("Added in cart");
                         dialog.dismiss();

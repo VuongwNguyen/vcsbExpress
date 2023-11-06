@@ -26,6 +26,7 @@ import com.hishd.tinycart.model.Item;
 import com.hishd.tinycart.util.TinyCartHelper;
 
 import java.text.NumberFormat;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
@@ -38,6 +39,8 @@ public class FragmentCart extends Fragment {
 
     private Product recentlyDeletedProduct;
     private int recentlyDeletedProductPosition;
+
+    private DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
 
     public FragmentCart() {
         // Required empty public constructor
@@ -76,6 +79,7 @@ public class FragmentCart extends Fragment {
             public void onQuantityChanged() {
 
                 binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));
+                binding.subtotal.setText(decimalFormat.format(cart.getTotalPrice()));
             }
         });
 
@@ -86,6 +90,7 @@ public class FragmentCart extends Fragment {
         binding.cartList.setAdapter(adapter);
 
         binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));
+        binding.subtotal.setText(decimalFormat.format(cart.getTotalPrice()));
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -112,12 +117,14 @@ public class FragmentCart extends Fragment {
 
                         // Cập nhật lại subtotal khi item được khôi phục
                         binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));
+                        binding.subtotal.setText(decimalFormat.format(cart.getTotalPrice()));
                     }
                 });
                 snackbar.show();
 
                 // Cập nhật lại subtotal
                 binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));
+                binding.subtotal.setText(decimalFormat.format(cart.getTotalPrice()));
             }
 
             @Override

@@ -20,6 +20,7 @@ import com.example.aexpress.model.Product;
 import com.hishd.tinycart.model.Cart;
 import com.hishd.tinycart.util.TinyCartHelper;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
@@ -28,7 +29,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     ArrayList<Product> products;
     CartListener cartListener;
     Cart cart;
-
 
 
     public interface CartListener {
@@ -46,7 +46,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @NonNull
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CartViewHolder(LayoutInflater.from(context).inflate(R.layout.item_cart, parent,false));
+        return new CartViewHolder(LayoutInflater.from(context).inflate(R.layout.item_cart, parent, false));
     }
 
     @Override
@@ -57,7 +57,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 .into(holder.binding.image);
 
         holder.binding.name.setText(product.getName());
-        holder.binding.price.setText(product.getPrice()-product.getDiscount()+" VNĐ");
+        DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
+        holder.binding.price.setText(decimalFormat.format(product.getPrice() - product.getDiscount()));
         holder.binding.quantity.setText(product.getQuantity() + " item(s)");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +85,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                         int quantity = product.getQuantity();
                         quantity++;
 
-                        if(quantity>product.getStock()) {
-                            Toast.makeText(context, "Max stock available: "+ product.getStock(), Toast.LENGTH_SHORT).show();
+                        if (quantity > product.getStock()) {
+                            Toast.makeText(context, "Max stock available: " + product.getStock(), Toast.LENGTH_SHORT).show();
                             return;
                         } else {
                             product.setQuantity(quantity);
@@ -102,7 +103,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     @Override
                     public void onClick(View view) {
                         int quantity = product.getQuantity();
-                        if(quantity > 1)
+                        if (quantity > 1)
                             quantity--;
                         product.setQuantity(quantity);
                         quantityDialogBinding.quantity.setText(String.valueOf(quantity));
@@ -127,12 +128,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             }
         });
     }
+
     public void removeItem(int position) {
-            Product productToRemove = products.get(position);
-            cart.removeItem(productToRemove);
-            products.remove(position);
-            notifyItemRemoved(position);
-            notifyDataSetChanged();
+        Product productToRemove = products.get(position);
+        cart.removeItem(productToRemove);
+        products.remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 
     public void restoreItem(Product product, int position) {
@@ -142,6 +144,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         notifyItemRangeChanged(position, products.size());
         notifyDataSetChanged();
     }
+
     @Override
     public int getItemCount() {
         return products.size();
@@ -150,6 +153,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public class CartViewHolder extends RecyclerView.ViewHolder {
 
         ItemCartBinding binding;
+
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
             binding = ItemCartBinding.bind(itemView);

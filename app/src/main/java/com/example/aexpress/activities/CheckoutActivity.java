@@ -36,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,6 +54,8 @@ public class CheckoutActivity extends AppCompatActivity {
     final int tax = 11;
     ProgressDialog progressDialog;
     Cart cart;
+
+    DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +83,7 @@ public class CheckoutActivity extends AppCompatActivity {
         adapter = new CartAdapter(this, products, new CartAdapter.CartListener() {
             @Override
             public void onQuantityChanged() {
-                binding.subtotal.setText(String.format("%.2f",cart.getTotalPrice()+" VNĐ"));
+                binding.subtotal.setText(String.format(decimalFormat.format(cart.getTotalPrice())));
             }
         });
 
@@ -90,10 +93,10 @@ public class CheckoutActivity extends AppCompatActivity {
         binding.cartList.addItemDecoration(itemDecoration);
         binding.cartList.setAdapter(adapter);
 
-        binding.subtotal.setText(String.format("PKR %.2f",cart.getTotalPrice()));
+        binding.subtotal.setText(String.format(decimalFormat.format(cart.getTotalPrice())));
 
         totalPrice = (cart.getTotalPrice().doubleValue() * tax / 100) + cart.getTotalPrice().doubleValue();
-        binding.total.setText("PKR " + totalPrice);
+        binding.total.setText(decimalFormat.format(totalPrice));
 
         binding.checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
