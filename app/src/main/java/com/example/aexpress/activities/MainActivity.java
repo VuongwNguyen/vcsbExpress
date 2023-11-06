@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
+
+        replaceFragment(new FragmentHome());
     }
 
     private void replaceFragment(Fragment fragment) {
