@@ -28,6 +28,14 @@
             android:layout_weight="5"
             app:mt_maxSuggestionsCount="10"
             app:mt_speechMode="true" />
+
+        <ImageView
+            android:id="@+id/ivCart"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cart"/>
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -23,6 +24,7 @@ import com.example.aexpress.fragments.FragmentCart;
 import com.example.aexpress.fragments.FragmentCategory;
 import com.example.aexpress.fragments.FragmentHome;
 
+import com.example.aexpress.fragments.FragmentsCartOrder;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
 
@@ -40,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         
 
+        binding.ivCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new FragmentCart());
+            }
+        });
         binding.searchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
@@ -60,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         replaceFragment(new FragmentHome());
         binding.bottomnavigation.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -69,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.categories:
                     replaceFragment(new FragmentCategory());
                     return true;
-                case R.id.cart:
-                    replaceFragment(new FragmentCart());
+                case R.id.history:
+                    replaceFragment(new FragmentsCartOrder());
                     return true;
             }
             return false;

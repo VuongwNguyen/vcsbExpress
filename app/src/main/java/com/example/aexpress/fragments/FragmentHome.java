@@ -63,16 +63,16 @@ public class FragmentHome extends Fragment {
         getRecentOffers();
     }
 
-   public void getRecentProducts() {
+    public void getRecentProducts() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
         String url = Constants.GET_PRODUCTS_URL + "?count=8";
         StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-                if(object.getString("status").equals("success")){
+                if (object.getString("status").equals("success")) {
                     JSONArray productsArray = object.getJSONArray("products");
-                    for(int i =0; i< productsArray.length(); i++) {
+                    for (int i = 0; i < productsArray.length(); i++) {
                         JSONObject childObj = productsArray.getJSONObject(i);
                         Product product = new Product(
                                 childObj.getString("name"),
@@ -83,8 +83,6 @@ public class FragmentHome extends Fragment {
                                 childObj.getInt("stock"),
                                 childObj.getInt("id"),
                                 childObj.getString("description")
-
-
                         );
                         products.add(product);
                     }
@@ -93,7 +91,8 @@ public class FragmentHome extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> { });
+        }, error -> {
+        });
 
         queue.add(request);
     }
@@ -104,10 +103,10 @@ public class FragmentHome extends Fragment {
         StringRequest request = new StringRequest(Request.Method.GET, Constants.GET_OFFERS_URL, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-                if(object.getString("status").equals("success")) {
+                if (object.getString("status").equals("success")) {
                     JSONArray offerArray = object.getJSONArray("news_infos");
-                    for(int i =0; i < offerArray.length(); i++) {
-                        JSONObject childObj =  offerArray.getJSONObject(i);
+                    for (int i = 0; i < offerArray.length(); i++) {
+                        JSONObject childObj = offerArray.getJSONObject(i);
                         binding.carousel.addData(
                                 new CarouselItem(
                                         Constants.NEWS_IMAGE_URL + childObj.getString("image"),
@@ -119,7 +118,8 @@ public class FragmentHome extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> {});
+        }, error -> {
+        });
         queue.add(request);
     }
 
