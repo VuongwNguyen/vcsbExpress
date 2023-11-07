@@ -70,8 +70,8 @@ public class FragmentsCartOrder extends Fragment {
 
     public void getCartOrder() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
-
-        StringRequest request = new StringRequest(Request.Method.GET, Constants.GET_PRODUCTS_ORDER_URL, new Response.Listener<String>() {
+        String url = Constants.GET_PRODUCTS_ORDER_URL;
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
