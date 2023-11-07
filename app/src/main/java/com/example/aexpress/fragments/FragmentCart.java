@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.aexpress.activities.CheckoutActivity;
 import com.example.aexpress.adapters.CartAdapter;
@@ -62,13 +63,13 @@ public class FragmentCart extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Locale locale = new Locale("vi","VN");
+        Locale locale = new Locale("vi", "VN");
 
         products = new ArrayList<>();
 
         Cart cart = TinyCartHelper.getCart();
 
-        for(Map.Entry<Item, Integer> item : cart.getAllItemsWithQty().entrySet()) {
+        for (Map.Entry<Item, Integer> item : cart.getAllItemsWithQty().entrySet()) {
             Product product = (Product) item.getKey();
             int quantity = item.getValue();
             product.setQuantity(quantity);
@@ -108,7 +109,7 @@ public class FragmentCart extends Fragment {
                 adapter.removeItem(recentlyDeletedProductPosition);
 
                 // Hiển thị Snackbar để cho phép khôi phục
-                Snackbar snackbar = Snackbar.make(requireView(), recentlyDeletedProduct.getName()+" removed", Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(requireView(), recentlyDeletedProduct.getName() + " removed", Snackbar.LENGTH_LONG);
                 snackbar.setAction("UNDO", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -137,7 +138,12 @@ public class FragmentCart extends Fragment {
         binding.continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), CheckoutActivity.class));
+                if (cart.isCartEmpty()) {
+                    Toast.makeText(getContext(), "Cart non-item!", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(getContext(), CheckoutActivity.class));
+
+                }
             }
         });
     }
