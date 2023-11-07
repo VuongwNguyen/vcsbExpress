@@ -61,13 +61,11 @@ public class FragmentsCartOrder extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         productOrders = new ArrayList<>();
-        getCartOrder();
-        RecyclerView recyclerView;
-        recyclerView = binding.cartorderList;
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
         cartorderAdapter = new CartOrderAdapter(getContext(), productOrders);
-        recyclerView.setAdapter(cartorderAdapter);
+        getCartOrder();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        binding.cartorderList.setLayoutManager(layoutManager);
+        binding.cartorderList.setAdapter(cartorderAdapter);
     }
 
     public void getCartOrder() {

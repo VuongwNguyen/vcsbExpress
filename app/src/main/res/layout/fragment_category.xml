@@ -37,34 +37,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp" />
             </androidx.cardview.widget.CardView>
-<<<<<<< Updated upstream
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/listDetailsCategories"/>
-=======
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                app:cardCornerRadius="10dp"
-                android:layout_margin="10dp"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:text="Flash Sale"
-                    android:textSize="25dp"
-                    android:textStyle="bold"
-                    android:layout_height="wrap_content"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="40dp"
-                    android:id="@+id/flashsaleList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </androidx.cardview.widget.CardView>
->>>>>>> Stashed changes
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
