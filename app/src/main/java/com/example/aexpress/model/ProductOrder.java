@@ -1,12 +1,11 @@
 package com.example.aexpress.model;
 
-public class ProductOrder {
+import java.io.Serializable;
+
+public class ProductOrder implements Serializable {
     private int id, created_at;
     private String code, buyer, status;
     private double total_fees;
-
-    public ProductOrder() {
-    }
 
     public ProductOrder(int id, int created_at, String code, String buyer, String status, double total_fees) {
         this.id = id;
@@ -47,6 +46,14 @@ public class ProductOrder {
 
     public void setBuyer(String buyer) {
         this.buyer = buyer;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public double getTotal_fees() {
