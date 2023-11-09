@@ -22,6 +22,7 @@ import com.example.aexpress.R;
 import com.example.aexpress.databinding.ActivityMainBinding;
 import com.example.aexpress.fragments.FragmentCart;
 import com.example.aexpress.fragments.FragmentCategory;
+import com.example.aexpress.fragments.FragmentChat;
 import com.example.aexpress.fragments.FragmentHome;
 
 import com.example.aexpress.fragments.FragmentsCartOrder;
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new FragmentCategory());
                     return true;
                 case R.id.history:
-                    replaceFragment(new FragmentsCartOrder());
+                    replaceFragment(new FragmentChat());
                     return true;
             }
             return false;

@@ -13,6 +13,7 @@ import com.example.aexpress.adapters.ProductAdapter;
 import com.example.aexpress.databinding.ActivityCategoryBinding;
 import com.example.aexpress.model.Product;
 import com.example.aexpress.utils.Constants;
+import com.sendbird.android.SendbirdChat;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +35,6 @@ public class CategoryActivity extends AppCompatActivity {
 
         products = new ArrayList<>();
         productAdapter = new ProductAdapter(this, products);
-
 
         int catId = getIntent().getIntExtra("catId", 0);
         String categoryName = getIntent().getStringExtra("categoryName");

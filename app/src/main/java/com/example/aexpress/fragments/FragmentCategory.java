@@ -71,7 +71,7 @@ public class FragmentCategory extends Fragment {
     void initCategories() {
         categories = new ArrayList<>();
         getCategories();
-        categoryAdapter = new CategoryAdapter(getContext(), categories,binding.listDetailsCategories);
+        categoryAdapter = new CategoryAdapter(getContext(), categories,binding.listDetailsCategories,binding.tvNameCategory);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
         binding.categoriesList.setLayoutManager(layoutManager);

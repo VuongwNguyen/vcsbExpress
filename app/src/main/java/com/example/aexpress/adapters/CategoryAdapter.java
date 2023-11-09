@@ -6,6 +6,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -34,14 +35,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     Context context;
     ArrayList<Category> categories;
     RecyclerView rcv;
+    TextView tv;
     ArrayList<Product> products;
     ProductAdapter productAdapter;
 
-    public CategoryAdapter(Context context, ArrayList<Category> categories, RecyclerView rcv) {
+    public CategoryAdapter(Context context, ArrayList<Category> categories, RecyclerView rcv,TextView tv) {
         this.context = context;
         this.categories = categories;
         this.rcv = rcv;
-
+        this.tv = tv;
     }
 
     @NonNull
@@ -72,7 +74,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 getProductsByCategory(category.getId());
                 rcv.setLayoutManager(layoutManager);
                 rcv.setAdapter(productAdapter);
-
+                tv.setText(category.getName());
+                tv.setBackgroundColor(Color.parseColor(category.getColor()));
             }
         });
     }
