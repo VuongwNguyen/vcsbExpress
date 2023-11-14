@@ -17,27 +17,62 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/placeholder" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/name"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Product Name"
-                android:textSize="15sp" />
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Product Name"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_toLeftOf="@id/quantityEdit"
+                    android:id="@+id/minusBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/minus"/>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_toLeftOf="@id/plusBtn"
+                    android:id="@+id/quantityEdit"
+                    android:layout_width="40dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="1"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/plusBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/plus"/>
+
+            </RelativeLayout>
+
 
             <LinearLayout
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -53,12 +88,13 @@
                     android:textSize="11sp" />
 
                 <TextView
+                    android:layout_marginRight="5dp"
                     android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="PKR 100.0"
+                    android:text="26,000 VNĐ"
                     android:textColor="#4CAF50"
                     android:textStyle="bold" />
             </LinearLayout>

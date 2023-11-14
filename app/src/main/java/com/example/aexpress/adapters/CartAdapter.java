@@ -1,21 +1,17 @@
 package com.example.aexpress.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.aexpress.R;
 import com.example.aexpress.databinding.ItemCartBinding;
-import com.example.aexpress.databinding.QuantityDialogBinding;
 import com.example.aexpress.model.Product;
 import com.hishd.tinycart.model.Cart;
 import com.hishd.tinycart.util.TinyCartHelper;
@@ -60,71 +56,38 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         DecimalFormat decimalFormat = new DecimalFormat("#,### VNĐ");
         holder.binding.price.setText(decimalFormat.format(product.getPrice() - product.getDiscount()));
         holder.binding.quantity.setText(product.getQuantity() + " item(s)");
+        holder.binding.quantityEdit.setText(String.valueOf(product.getQuantity()));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceAsColor")
+        holder.binding.plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                QuantityDialogBinding quantityDialogBinding = QuantityDialogBinding.inflate(LayoutInflater.from(context));
+                int quantity = product.getQuantity();
+                quantity++;
 
-                AlertDialog dialog = new AlertDialog.Builder(context)
-                        .setView(quantityDialogBinding.getRoot())
-                        .create();
+                if (quantity > product.getStock()) {
+                    Toast.makeText(context, "Max stock available: " + product.getStock(), Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    product.setQuantity(quantity);
+                }
 
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(R.color.transparent));
+                notifyDataSetChanged();
+                cart.updateItem(product, product.getQuantity());
+                cartListener.onQuantityChanged();
+            }
+        });
 
-                quantityDialogBinding.productName.setText(product.getName());
-                quantityDialogBinding.productStock.setText("Stock: " + product.getStock());
-                quantityDialogBinding.quantity.setText(String.valueOf(product.getQuantity()));
-                int stock = product.getStock();
+        holder.binding.minusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int quantity = product.getQuantity();
+                if (quantity > 1)
+                    quantity--;
+                product.setQuantity(quantity);
 
-
-                quantityDialogBinding.plusBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int quantity = product.getQuantity();
-                        quantity++;
-
-                        if (quantity > product.getStock()) {
-                            Toast.makeText(context, "Max stock available: " + product.getStock(), Toast.LENGTH_SHORT).show();
-                            return;
-                        } else {
-                            product.setQuantity(quantity);
-                            quantityDialogBinding.quantity.setText(String.valueOf(quantity));
-                        }
-
-                        notifyDataSetChanged();
-                        cart.updateItem(product, product.getQuantity());
-                        cartListener.onQuantityChanged();
-                    }
-                });
-
-                quantityDialogBinding.minusBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int quantity = product.getQuantity();
-                        if (quantity > 1)
-                            quantity--;
-                        product.setQuantity(quantity);
-                        quantityDialogBinding.quantity.setText(String.valueOf(quantity));
-
-                        notifyDataSetChanged();
-                        cart.updateItem(product, product.getQuantity());
-                        cartListener.onQuantityChanged();
-                    }
-                });
-
-                quantityDialogBinding.saveBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-//                        notifyDataSetChanged();
-//                        cart.updateItem(product, product.getQuantity());
-//                        cartListener.onQuantityChanged();
-                    }
-                });
-
-                dialog.show();
+                notifyDataSetChanged();
+                cart.updateItem(product, product.getQuantity());
+                cartListener.onQuantityChanged();
             }
         });
     }
