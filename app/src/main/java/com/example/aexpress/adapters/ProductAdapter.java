@@ -69,14 +69,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
                 detailsProductDialogBinding.tvNameProduct.setText(product.getName());
                 detailsProductDialogBinding.productDescription.setText(Html.fromHtml(product.getDescription()));
-                detailsProductDialogBinding.tvPriceProduct.setText(product.getPrice() - product.getDiscount() + " VNĐ");
-                detailsProductDialogBinding.tvDiscountProduct.setText(Html.fromHtml("<s>" + product.getPrice() + " VNĐ</s>"));
+                detailsProductDialogBinding.tvPriceProduct.setText(product.getPrice() - product.getDiscount() + "");
+                detailsProductDialogBinding.tvDiscountProduct.setText(Html.fromHtml("<s>" + product.getPrice() + "</s>"));
                 detailsProductDialogBinding.tvStock.setText("Current also: "+product.getStock()+" Cups");
                 detailsProductDialogBinding.ratingBar.setRating((float) Math.random()*5);
                 Glide.with(detailsProductDialogBinding.getRoot()).load(product.getImage()).into(detailsProductDialogBinding.productImage);
 
-                detailsProductDialogBinding.tvPriceProduct.setText(decimalFormat.format(product.getPrice() - product.getDiscount()) + " VNĐ");
-                detailsProductDialogBinding.tvDiscountProduct.setText(Html.fromHtml("<s>" + decimalFormat.format(product.getPrice()) + " VNĐ</s>"));
+                detailsProductDialogBinding.tvPriceProduct.setText(decimalFormat.format(product.getPrice() - product.getDiscount()));
+                detailsProductDialogBinding.tvDiscountProduct.setText(Html.fromHtml("<s>" + decimalFormat.format(product.getPrice())+"</s>"));
                 detailsProductDialogBinding.tvStock.setText("Current also: " + product.getStock() + " Cups");
                 detailsProductDialogBinding.ratingBar.setRating((float) Math.random() * 5);
                 Glide.with(detailsProductDialogBinding.getRoot()).load(product.getImage())
