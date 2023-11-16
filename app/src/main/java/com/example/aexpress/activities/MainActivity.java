@@ -22,10 +22,8 @@ import com.example.aexpress.R;
 import com.example.aexpress.databinding.ActivityMainBinding;
 import com.example.aexpress.fragments.FragmentCart;
 import com.example.aexpress.fragments.FragmentCategory;
-import com.example.aexpress.fragments.FragmentChat;
 import com.example.aexpress.fragments.FragmentHome;
 
-import com.example.aexpress.fragments.FragmentsCartOrder;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
 
@@ -89,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new FragmentHome());
     }
 
-    private void replaceFragment(Fragment fragment) {
+    public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment, fragment);

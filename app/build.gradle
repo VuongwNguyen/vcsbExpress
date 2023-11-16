@@ -66,4 +66,16 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.github.hishd:TinyCart:1.0.1'
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'          //http library
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'    //coverter
+    implementation 'com.balysv:material-ripple:1.0.2'               // ripple effect
+
+
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'          // circle image view
+
+
+    //room
+    implementation 'androidx.room:room-runtime:2.2.5'               //database
+    annotationProcessor 'androidx.room:room-compiler:2.2.5'
 }
