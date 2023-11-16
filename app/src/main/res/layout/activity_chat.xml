@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:background="#E8E9E4"
     android:orientation="vertical"
-    tools:context=".activity.ChatActivity">
+    tools:context=".activities.ChatActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#075E54"
+        android:background="@color/orange"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -27,7 +27,6 @@
             android:paddingRight="@dimen/spacing_medium">
 
             <ImageButton
-
                 android:layout_width="wrap_content"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/transparent"
@@ -44,7 +43,7 @@
                 android:layout_height="36dp"
                 android:src="@drawable/photo_male_7"
                 app:civ_border="true"
-                app:civ_border_color="#075E54"
+                app:civ_border_color="@color/orange"
                 app:civ_border_width="0dp"
                 app:civ_shadow="true"
                 app:civ_shadow_radius="0" />
@@ -141,7 +140,7 @@
                     android:clickable="true"
                     android:padding="@dimen/spacing_middle"
                     app:srcCompat="@drawable/ic_sentiment_satisfied"
-                    app:tint="#00897B" />
+                    app:tint="@color/orange" />
 
                 <EditText
                     android:id="@+id/text_content"
@@ -160,7 +159,7 @@
                     android:clickable="true"
                     android:padding="@dimen/spacing_middle"
                     app:srcCompat="@drawable/ic_photo_camera"
-                    app:tint="#00897B" />
+                    app:tint="@color/orange" />
 
 
             </LinearLayout>
@@ -175,7 +174,7 @@
             android:layout_margin="@dimen/spacing_small"
             android:clickable="true"
             android:gravity="center"
-            app:backgroundTint="#00897B"
+            app:backgroundTint="@color/orange"
             app:elevation="1dp"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_mic"

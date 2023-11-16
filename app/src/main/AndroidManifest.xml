@@ -47,7 +47,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.ChatActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".activities.ProductDetailActivity"
             android:exported="false"

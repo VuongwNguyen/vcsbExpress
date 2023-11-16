@@ -366,7 +366,7 @@ public class ChatActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setHomeButtonEnabled(false);
         actionBar.setTitle(null);
-        Tools.setSystemBarColorInt(this, Color.parseColor("#054D44"));
+        Tools.setSystemBarColorInt(this, Color.parseColor("#FF5722"));
     }
 
 }
