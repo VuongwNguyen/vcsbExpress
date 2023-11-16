@@ -1,6 +1,7 @@
 package com.example.aexpress.activities;
 
-import static com.muhindo.whatsappchat.activity.StartActivity.BASE_URL;
+
+import static com.example.aexpress.activities.StartActivity.BASE_URL;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,11 +20,13 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.muhindo.whatsappchat.R;
-import com.muhindo.whatsappchat.adapter.AdapterUsers;
-import com.muhindo.whatsappchat.db.DatabaseRepository;
-import com.muhindo.whatsappchat.model.UserModel;
-import com.muhindo.whatsappchat.web.WebInterface;
+;
+
+import com.example.aexpress.R;
+import com.example.aexpress.adapters.AdapterUsers;
+import com.example.aexpress.db.DatabaseRepository;
+import com.example.aexpress.model.UserModel;
+import com.example.aexpress.web.WebInterface;
 
 import java.util.ArrayList;
 import java.util.List;

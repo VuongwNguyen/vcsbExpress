@@ -1,6 +1,7 @@
 package com.example.aexpress.model;
 
-import static com.example.aexpress.utils.Constants.USERS_TABLE;
+
+import static com.example.aexpress.activities.StartActivity.USERS_TABLE;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

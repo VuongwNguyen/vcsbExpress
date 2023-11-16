@@ -1,6 +1,8 @@
 package com.example.aexpress.model;
 
-import static com.muhindo.whatsappchat.activity.StartActivity.MESSAGES_TABLE;
+
+
+import static com.example.aexpress.activities.StartActivity.MESSAGES_TABLE;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

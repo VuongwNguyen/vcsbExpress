@@ -1,8 +1,9 @@
 package com.example.aexpress.activities;
 
-import static com.muhindo.whatsappchat.Tools.getTimeStamp;
-import static com.muhindo.whatsappchat.Tools.toTimeAgo;
-import static com.muhindo.whatsappchat.activity.StartActivity.BASE_URL;
+
+import static com.example.aexpress.activities.StartActivity.BASE_URL;
+import static com.example.aexpress.utils.Tools.getTimeStamp;
+import static com.example.aexpress.utils.Tools.toTimeAgo;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -27,16 +28,16 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.aexpress.R;
+import com.example.aexpress.adapters.AdapterChatWhatsapp;
+import com.example.aexpress.db.DatabaseRepository;
+import com.example.aexpress.model.ChatMessage;
+import com.example.aexpress.model.ResponseModel;
+import com.example.aexpress.model.UserModel;
+import com.example.aexpress.utils.Tools;
+import com.example.aexpress.web.WebInterface;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
-import com.muhindo.whatsappchat.R;
-import com.muhindo.whatsappchat.Tools;
-import com.muhindo.whatsappchat.adapter.AdapterChatWhatsapp;
-import com.muhindo.whatsappchat.db.DatabaseRepository;
-import com.muhindo.whatsappchat.model.ChatMessage;
-import com.muhindo.whatsappchat.model.ResponseModel;
-import com.muhindo.whatsappchat.model.UserModel;
-import com.muhindo.whatsappchat.web.WebInterface;
 
 import java.util.ArrayList;
 import java.util.List;

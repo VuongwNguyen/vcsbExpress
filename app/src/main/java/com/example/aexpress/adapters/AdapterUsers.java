@@ -9,8 +9,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.muhindo.whatsappchat.R;
-import com.muhindo.whatsappchat.model.UserModel;
+
+import com.example.aexpress.R;
+import com.example.aexpress.model.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;

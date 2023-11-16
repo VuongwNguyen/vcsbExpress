@@ -15,7 +15,12 @@
         <activity
             android:name=".activities.SearchActivity"
             android:exported="false"
-            android:theme="@style/Theme.AExpress.Actionbar"/>
+            android:theme="@style/Theme.AExpress.Actionbar" />
+        <activity
+            android:name=".activities.CheckoutActivity"
+            android:exported="false"
+            android:label="Checkout"
+            android:theme="@style/Theme.AExpress.Actionbar" />
         <activity
             android:name=".activities.CategoryActivity"
             android:exported="false"
@@ -26,10 +31,23 @@
             android:label="Payment"
             android:theme="@style/Theme.AExpress.Actionbar" />
         <activity
-            android:name=".activities.CheckoutActivity"
-            android:exported="false"
-            android:label="Checkout"
-            android:theme="@style/Theme.AExpress.Actionbar" />
+            android:name=".activities.ChatsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.StartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ChatActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.ProductDetailActivity"
             android:exported="false"

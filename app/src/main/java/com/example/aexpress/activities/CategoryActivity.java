@@ -13,7 +13,6 @@ import com.example.aexpress.adapters.ProductAdapter;
 import com.example.aexpress.databinding.ActivityCategoryBinding;
 import com.example.aexpress.model.Product;
 import com.example.aexpress.utils.Constants;
-import com.sendbird.android.SendbirdChat;
 
 import org.json.JSONArray;
 import org.json.JSONException;

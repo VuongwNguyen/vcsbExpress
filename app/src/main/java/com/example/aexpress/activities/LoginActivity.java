@@ -1,6 +1,7 @@
 package com.example.aexpress.activities;
 
-import static com.muhindo.whatsappchat.activity.StartActivity.BASE_URL;
+
+import static com.example.aexpress.activities.StartActivity.BASE_URL;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,12 +13,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.aexpress.R;
+import com.example.aexpress.db.DatabaseRepository;
+import com.example.aexpress.model.LoggedInUserModel;
+import com.example.aexpress.model.UserModel;
+import com.example.aexpress.web.WebInterface;
 import com.google.android.material.textfield.TextInputEditText;
-import com.muhindo.whatsappchat.R;
-import com.muhindo.whatsappchat.db.DatabaseRepository;
-import com.muhindo.whatsappchat.model.LoggedInUserModel;
-import com.muhindo.whatsappchat.model.UserModel;
-import com.muhindo.whatsappchat.web.WebInterface;
+
 
 import java.util.List;
 

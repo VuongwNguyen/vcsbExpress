@@ -5,9 +5,10 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.muhindo.whatsappchat.model.ChatMessage;
-import com.muhindo.whatsappchat.model.LoggedInUserModel;
-import com.muhindo.whatsappchat.model.UserModel;
+
+import com.example.aexpress.model.ChatMessage;
+import com.example.aexpress.model.LoggedInUserModel;
+import com.example.aexpress.model.UserModel;
 
 import java.util.List;
 

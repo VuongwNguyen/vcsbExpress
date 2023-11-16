@@ -1,8 +1,8 @@
 package com.example.aexpress.db;
 
-import static com.muhindo.whatsappchat.activity.StartActivity.LOGGED_IN_USER_TABLE;
-import static com.muhindo.whatsappchat.activity.StartActivity.MESSAGES_TABLE;
-import static com.muhindo.whatsappchat.activity.StartActivity.USERS_TABLE;
+import static com.example.aexpress.activities.StartActivity.LOGGED_IN_USER_TABLE;
+import static com.example.aexpress.activities.StartActivity.MESSAGES_TABLE;
+import static com.example.aexpress.activities.StartActivity.USERS_TABLE;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -10,9 +10,10 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.muhindo.whatsappchat.model.ChatMessage;
-import com.muhindo.whatsappchat.model.LoggedInUserModel;
-import com.muhindo.whatsappchat.model.UserModel;
+
+import com.example.aexpress.model.ChatMessage;
+import com.example.aexpress.model.LoggedInUserModel;
+import com.example.aexpress.model.UserModel;
 
 import java.util.List;
 

@@ -1,6 +1,7 @@
 package com.example.aexpress.adapters;
 
-import static com.muhindo.whatsappchat.Tools.toTimeAgo;
+
+import static com.example.aexpress.utils.Tools.toTimeAgo;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,8 +12,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.muhindo.whatsappchat.R;
-import com.muhindo.whatsappchat.model.ChatMessage;
+
+import com.example.aexpress.R;
+import com.example.aexpress.model.ChatMessage;
 
 import java.util.ArrayList;
 import java.util.List;

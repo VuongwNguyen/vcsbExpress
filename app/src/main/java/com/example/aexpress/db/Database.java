@@ -1,15 +1,17 @@
 package com.example.aexpress.db;
 
-import static com.muhindo.whatsappchat.activity.StartActivity.DATABASE_NAME;
+
+import static com.example.aexpress.activities.StartActivity.DATABASE_NAME;
 
 import android.content.Context;
 
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.muhindo.whatsappchat.model.ChatMessage;
-import com.muhindo.whatsappchat.model.LoggedInUserModel;
-import com.muhindo.whatsappchat.model.UserModel;
+
+import com.example.aexpress.model.ChatMessage;
+import com.example.aexpress.model.LoggedInUserModel;
+import com.example.aexpress.model.UserModel;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

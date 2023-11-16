@@ -14,9 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
-import com.muhindo.whatsappchat.R;
-import com.muhindo.whatsappchat.db.DatabaseRepository;
-import com.muhindo.whatsappchat.model.LoggedInUserModel;
+import com.example.aexpress.R;
+import com.example.aexpress.db.DatabaseRepository;
+import com.example.aexpress.model.LoggedInUserModel;
+
 
 public class ChatsActivity extends AppCompatActivity {
 
@@ -35,6 +36,7 @@ public class ChatsActivity extends AppCompatActivity {
     }
 
     private void get_logged_in_user() {
+
         databaseRepository.get_logged_in_user().observe((LifecycleOwner) context, new Observer<LoggedInUserModel>() {
             @Override
             public void onChanged(LoggedInUserModel u) {

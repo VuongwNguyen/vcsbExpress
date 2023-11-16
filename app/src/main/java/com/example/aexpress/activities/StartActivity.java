@@ -7,9 +7,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
-import com.muhindo.whatsappchat.R;
-import com.muhindo.whatsappchat.db.DatabaseRepository;
-import com.muhindo.whatsappchat.model.LoggedInUserModel;
+import com.example.aexpress.R;
+import com.example.aexpress.db.DatabaseRepository;
+import com.example.aexpress.model.LoggedInUserModel;
+
 
 public class StartActivity extends AppCompatActivity {
 
@@ -18,7 +19,7 @@ public class StartActivity extends AppCompatActivity {
     public static final String USERS_TABLE = "USERS_TABLE";
     public static final String MESSAGES_TABLE = "MESSAGES_TABLE";
 
-    public static final String BASE_URL = "http://192.168.0.102/whatsapp/";
+    public static final String BASE_URL = "https://jugal-hit.000webhostapp.com/whatsapp/";
     DatabaseRepository databaseRepository;
 
     @Override
@@ -40,9 +41,7 @@ public class StartActivity extends AppCompatActivity {
                     Intent i = new Intent(StartActivity.this, RegisterActivity.class);
                     StartActivity.this.startActivity(i);
                     finish();
-                    return;
                 } else {
-
                     databaseRepository.login_user(loggedInUserModel);
                     Intent i = new Intent(StartActivity.this, ChatsActivity.class);
                     StartActivity.this.startActivity(i);

@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new FragmentCategory());
                     return true;
                 case R.id.history:
-                    replaceFragment(new FragmentChat());
+                    startActivity(new Intent(MainActivity.this, StartActivity.class));
                     return true;
             }
             return false;
