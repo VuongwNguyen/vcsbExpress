@@ -75,7 +75,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 rcv.setLayoutManager(layoutManager);
                 rcv.setAdapter(productAdapter);
                 tv.setText(category.getName());
-                tv.setBackgroundColor(Color.parseColor(category.getColor()));
             }
         });
     }
