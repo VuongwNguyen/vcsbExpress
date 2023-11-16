@@ -85,7 +85,6 @@ public class FragmentCategory extends Fragment {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.e("err", response);
                     JSONObject mainObj = new JSONObject(response);
                     if(mainObj.getString("status").equals("success")) {
                         JSONArray categoriesArray = mainObj.getJSONArray("categories");
