@@ -126,9 +126,7 @@ public class FragmentHome extends Fragment {
     void initProducts() {
         products = new ArrayList<>();
         productAdapter = new ProductAdapter(getContext(), products);
-
         getRecentProducts();
-
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         binding.productList.setLayoutManager(layoutManager);
         binding.productList.setAdapter(productAdapter);

@@ -48,7 +48,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = products.get(position);
-        if (product.getDiscount()>=3000){
+        if (product.getDiscount()!=0){
             holder.binding.ivDiscount.setVisibility(View.VISIBLE);
         }
         Glide.with(context)
@@ -66,7 +66,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             public void onClick(View view) {
                 DetailsProductDialogBinding detailsProductDialogBinding = DetailsProductDialogBinding.inflate(LayoutInflater.from(context));
                 AlertDialog dialog = new AlertDialog.Builder(context).setView(detailsProductDialogBinding.getRoot()).create();
-
+                if(product.getDiscount() == 0){
+                    detailsProductDialogBinding.tvDiscountProduct.setVisibility(View.GONE);
+                }
                 detailsProductDialogBinding.tvNameProduct.setText(product.getName());
                 detailsProductDialogBinding.productDescription.setText(Html.fromHtml(product.getDescription()));
                 detailsProductDialogBinding.tvPriceProduct.setText(product.getPrice() - product.getDiscount() + "");
