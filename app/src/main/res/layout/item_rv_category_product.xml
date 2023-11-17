@@ -18,6 +18,7 @@
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:text="Hello"
+            android:fontFamily=""
             android:textStyle="bold"
             android:id="@+id/txtCate"
             android:layout_height="wrap_content"/>

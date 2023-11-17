@@ -1,6 +1,7 @@
 package com.example.aexpress.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
     public void onBindViewHolder(@NonNull ProductCategoryAdapter.ViewHolder holder, int position) {
         ProductCategory productCategory = list.get(position);
         ArrayList<Product> products = productCategory.getProducts();
-
+        holder.binding.txtCate.setTypeface(Typeface.createFromAsset(context.getAssets(), "VNPARK.TTF"));
         holder.binding.txtCate.setText(productCategory.getCategory());
         ProductAdapter productAdapter = new ProductAdapter(context, products);
         holder.binding.rvProduct.setAdapter(productAdapter);
