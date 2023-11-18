@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -110,6 +111,7 @@ public class UsersActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Users");
         getSupportActionBar().setSubtitle(users.size() + "");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         progress_bar = findViewById(R.id.progress_bar);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         no_record_found = findViewById(R.id.no_record_found);
@@ -209,7 +211,5 @@ public class UsersActivity extends AppCompatActivity {
                 Toast.makeText(context, "Failed to get online users because " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 }
