@@ -6,9 +6,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -43,8 +45,24 @@ public class ChatsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Messages");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(item.getItemId() == R.id.logout) {
+                    logout_user();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menuchat, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -73,13 +91,7 @@ public class ChatsActivity extends AppCompatActivity {
     }
 
     private void bind_views() {
-        ((Button) (findViewById(R.id.btn_logout))).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logout_user();
-            }
-        });
-        ((Button) (findViewById(R.id.btn_pick_user))).setOnClickListener(new View.OnClickListener() {
+        ((ImageView) (findViewById(R.id.btn_pick_user))).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pick_user();
@@ -89,17 +101,6 @@ public class ChatsActivity extends AppCompatActivity {
 
     int my_counter = 0;
     Handler handler = new Handler();
-
-    private void my_counter() {
-        ((Button) (findViewById(R.id.btn_pick_user))).setText(my_counter + "");
-        my_counter++;
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                my_counter();
-                // yourMethod();
-            }
-        }, 1000);
-    }
 
     private void pick_user() {
         Intent i = new Intent(context, UsersActivity.class);
