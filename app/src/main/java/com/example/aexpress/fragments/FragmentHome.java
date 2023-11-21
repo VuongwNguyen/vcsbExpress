@@ -129,7 +129,9 @@ public class FragmentHome extends Fragment {
                         );
                         products.add(product);
                     }
-                    productCategory.getProductArray(products, category);
+                    if(category.equals("Flash Sale") || category.equals("Best Seller")){
+                        productCategory.getProductArray(products, category);
+                    }
                 } else {
                     Toast.makeText(requireContext(), "No connected from server", Toast.LENGTH_SHORT).show();
                 }

@@ -60,18 +60,18 @@ public class FragmentCategory extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        products =new ArrayList<>();
-        productAdapter = new ProductAdapter(getContext(),products);
+        products = new ArrayList<>();
+        productAdapter = new ProductAdapter(getContext(), products);
         initCategories();
         getRecentProducts();
-        binding.listDetailsCategories.setLayoutManager(new GridLayoutManager(getContext(),2));
+        binding.listDetailsCategories.setLayoutManager(new GridLayoutManager(getContext(), 2));
         binding.listDetailsCategories.setAdapter(productAdapter);
     }
 
     void initCategories() {
         categories = new ArrayList<>();
         getCategories();
-        categoryAdapter = new CategoryAdapter(getContext(), categories,binding.listDetailsCategories,binding.tvNameCategory);
+        categoryAdapter = new CategoryAdapter(getContext(), categories, binding.listDetailsCategories, binding.tvNameCategory);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
         binding.categoriesList.setLayoutManager(layoutManager);
@@ -86,9 +86,9 @@ public class FragmentCategory extends Fragment {
             public void onResponse(String response) {
                 try {
                     JSONObject mainObj = new JSONObject(response);
-                    if(mainObj.getString("status").equals("success")) {
+                    if (mainObj.getString("status").equals("success")) {
                         JSONArray categoriesArray = mainObj.getJSONArray("categories");
-                        for(int i =0; i< categoriesArray.length(); i++) {
+                        for (int i = 0; i < categoriesArray.length(); i++) {
                             JSONObject object = categoriesArray.getJSONObject(i);
                             Category category = new Category(
                                     object.getString("name"),
@@ -97,7 +97,9 @@ public class FragmentCategory extends Fragment {
                                     object.getString("brief"),
                                     object.getInt("id")
                             );
-                            categories.add(category);
+                            if (!object.getString("name").equals("Flash Sale") && !(object.getString("name").equals("Best Seller"))) {
+                                categories.add(category);
+                            }
                         }
                         categoryAdapter.notifyDataSetChanged();
                     } else {
@@ -116,6 +118,7 @@ public class FragmentCategory extends Fragment {
 
         queue.add(request);
     }
+
     public void getRecentProducts() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
@@ -123,9 +126,9 @@ public class FragmentCategory extends Fragment {
         StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
             try {
                 JSONObject object = new JSONObject(response);
-                if(object.getString("status").equals("success")){
+                if (object.getString("status").equals("success")) {
                     JSONArray productsArray = object.getJSONArray("products");
-                    for(int i =0; i< productsArray.length(); i++) {
+                    for (int i = 0; i < productsArray.length(); i++) {
                         JSONObject childObj = productsArray.getJSONObject(i);
                         Product product = new Product(
                                 childObj.getString("name"),
@@ -144,7 +147,8 @@ public class FragmentCategory extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> { });
+        }, error -> {
+        });
 
         queue.add(request);
     }
