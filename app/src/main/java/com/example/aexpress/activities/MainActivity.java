@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.speech.RecognizerIntent;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -18,29 +21,43 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.aexpress.R;
-
 import com.example.aexpress.databinding.ActivityMainBinding;
 import com.example.aexpress.fragments.FragmentCart;
 import com.example.aexpress.fragments.FragmentCategory;
 import com.example.aexpress.fragments.FragmentHome;
-
+import com.hishd.tinycart.model.Cart;
+import com.hishd.tinycart.model.Item;
+import com.hishd.tinycart.util.TinyCartHelper;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
-
-
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    Cart cart;
+    int itemCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        
-
+        /* cái này nó bị thiểu năng nè :))))))) */
+        Handler handler = new Handler(Looper.getMainLooper());
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                countItem(binding.quantity);
+                handler.postDelayed(this, 2000);
+            }
+        };
+        handler.postDelayed(runnable, 2000);
+        /* đừng thắc sao tui làm z tại nó chạy dc là dc :))
+         *
+         *
+         * máy yếu gặp cái này là hết nước chấm =))) */
         binding.ivCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,20 +87,18 @@ public class MainActivity extends AppCompatActivity {
 
         replaceFragment(new FragmentHome());
         binding.bottomnavigation.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.home:
-                    replaceFragment(new FragmentHome());
-                    return true;
-                case R.id.categories:
-                    replaceFragment(new FragmentCategory());
-                    return true;
-                case R.id.history:
-                    startActivity(new Intent(MainActivity.this, StartActivity.class));
-                    return true;
+            if (item.getItemId() == R.id.home){
+                replaceFragment(new FragmentHome());
+                return true;
+            } else if (item.getItemId()==R.id.categories) {
+                replaceFragment(new FragmentCategory());
+                return true;
+            } else if (item.getItemId() == R.id.history) {
+                startActivity(new Intent(MainActivity.this, StartActivity.class));
+                return true;
             }
             return false;
         });
-
         replaceFragment(new FragmentHome());
     }
 
@@ -125,4 +140,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+
+    public void countItem(TextView textView) {
+        itemCount = 0;
+        cart = TinyCartHelper.getCart();
+        Map<Item, Integer> itemWithQty = cart.getAllItemsWithQty();
+        for (int quantity : itemWithQty.values()) {
+            itemCount += quantity;
+        }
+        textView.setText(String.valueOf(itemCount));
+    }
+
 }

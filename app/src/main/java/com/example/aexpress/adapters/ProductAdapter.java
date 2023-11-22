@@ -1,5 +1,9 @@
 package com.example.aexpress.adapters;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -7,6 +11,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -15,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.aexpress.R;
 import com.example.aexpress.databinding.DetailsProductDialogBinding;
+import com.example.aexpress.databinding.DialogConfirmBinding;
 import com.example.aexpress.databinding.ItemProductBinding;
 import com.example.aexpress.model.Product;
 import com.hishd.tinycart.model.Cart;
@@ -23,8 +29,6 @@ import com.hishd.tinycart.util.TinyCartHelper;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
@@ -50,7 +54,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Collections.shuffle(products);
+//        Collections.shuffle(products);
         holder.binding.shimmerLayout.startShimmer();
         Product product = products.get(position);
 
@@ -108,6 +112,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                             detailsProductDialogBinding.addToCartBtn.setEnabled(false);
                             detailsProductDialogBinding.addToCartBtn.setText("Added in cart");
                             dialog.dismiss();
+                            DialogConfirmBinding dialogConfirmBinding = DialogConfirmBinding.inflate(LayoutInflater.from(context));
+                            final Dialog dialogConfirm = new Dialog(context);
+                            dialogConfirm.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialogConfirm.setContentView(dialogConfirmBinding.getRoot());
+                            dialogConfirmBinding.textConfirm.setText("Added To Cart!");
+                            dialogConfirm.show();
+                            dialog.dismiss();
+                            View dialogView = dialogConfirm.getWindow().getDecorView();
+                            ObjectAnimator fadeOut = ObjectAnimator.ofFloat(dialogView, "alpha", 1f, 0f);
+                            fadeOut.setDuration(1000);
+                            fadeOut.addListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    dialogConfirm.dismiss();
+                                }
+                            });
+                            fadeOut.start();
                         }
                     });
                     dialog.show();
