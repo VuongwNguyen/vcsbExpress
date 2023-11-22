@@ -23,6 +23,8 @@ import com.hishd.tinycart.util.TinyCartHelper;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
@@ -48,11 +50,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
+        Collections.shuffle(products);
         holder.binding.shimmerLayout.startShimmer();
         Product product = products.get(position);
 
         handler.postDelayed(() -> {
-
             if (product.getDiscount() != 0) {
                 holder.binding.ivDiscount.setVisibility(View.VISIBLE);
             }
@@ -60,7 +62,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     .load(product.getImage())
                     .into(holder.binding.image);
             holder.binding.label.setText(product.getName());
-
             double price = product.getPrice() - product.getDiscount();
             decimalFormat = new DecimalFormat("#,### VNĐ"); // Làm tròn số và thêm đơn vị tiền tệ
             String formattedPrice = decimalFormat.format(price);
@@ -81,7 +82,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     detailsProductDialogBinding.tvStock.setText("Current also: " + product.getStock() + " Cups");
                     detailsProductDialogBinding.ratingBar.setRating((float) Math.random() * 5);
                     Glide.with(detailsProductDialogBinding.getRoot()).load(product.getImage()).into(detailsProductDialogBinding.productImage);
-
                     detailsProductDialogBinding.tvPriceProduct.setText(decimalFormat.format(product.getPrice() - product.getDiscount()));
                     detailsProductDialogBinding.tvDiscountProduct.setText(Html.fromHtml("<s>" + decimalFormat.format(product.getPrice()) + "</s>"));
                     detailsProductDialogBinding.tvStock.setText("Current also: " + product.getStock() + " Cups");
@@ -113,8 +113,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     dialog.show();
                 }
             });
-        }, 200 * position);
-        holder.binding.shimmerLayout.stopShimmer();
+            holder.binding.shimmerLayout.stopShimmer();
+            holder.binding.shimmerLayout.setShimmer(null);
+        }, 350 * position);
     }
 
     @Override

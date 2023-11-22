@@ -14,6 +14,8 @@ import com.example.aexpress.R;
 import com.example.aexpress.model.UserModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class AdapterUsers extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -63,7 +65,8 @@ public class AdapterUsers extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             OriginalViewHolder view = (OriginalViewHolder) holder;
             UserModel u = items.get(position);
             view.name_view.setText(u.name);
-            view.phone_view.setText(u.phone_number);
+            view.phone_view.setText(formatPhoneNumber(u.phone_number));
+
             view.lyt_parent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -82,4 +85,18 @@ public class AdapterUsers extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private static final String TAG = "AdapterUsers";
 
+    private String formatPhoneNumber(String phoneNumber) {
+        // Kiểm tra xem số điện thoại có ít nhất 3 ký tự hay không
+        if (phoneNumber.length() < 3) {
+            return phoneNumber; // Không thay đổi nếu không đủ 3 ký tự
+        }
+
+        // Lấy 3 số cuối của số điện thoại
+        String lastThreeDigits = phoneNumber.substring(phoneNumber.length() - 3);
+
+        // Tạo một chuỗi mới với *** thay thế 3 số cuối
+        String formattedPhoneNumber = phoneNumber.substring(0, phoneNumber.length() - 3) + "***";
+
+        return formattedPhoneNumber;
+    }
 }

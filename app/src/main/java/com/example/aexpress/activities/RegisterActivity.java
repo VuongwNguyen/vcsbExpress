@@ -82,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         phone_value = phone_number_view.getText().toString();
-        if (phone_value.length() < 5) {
+        if (phone_value.length() < 10) {
             Toast.makeText(this, "Enter valid phone number.", Toast.LENGTH_SHORT).show();
             phone_number_view.requestFocus();
             return;

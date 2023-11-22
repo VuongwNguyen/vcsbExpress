@@ -19,9 +19,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
+import com.bumptech.glide.Glide;
 import com.example.aexpress.R;
+import com.example.aexpress.databinding.ActivityChatsBinding;
 import com.example.aexpress.db.DatabaseRepository;
 import com.example.aexpress.model.LoggedInUserModel;
+import com.example.aexpress.model.UserModel;
 
 
 public class ChatsActivity extends AppCompatActivity {
@@ -29,16 +32,18 @@ public class ChatsActivity extends AppCompatActivity {
     DatabaseRepository databaseRepository;
     Context context;
     LoggedInUserModel loggedInUserModel = null;
+    String name;
+    ActivityChatsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chats);
+        binding = ActivityChatsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         context = this;
         databaseRepository = new DatabaseRepository(context);
         bind_views();
         get_logged_in_user();
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -56,6 +61,8 @@ public class ChatsActivity extends AppCompatActivity {
                 return false;
             }
         });
+        binding.name.setText(name);
+
     }
 
     @Override
@@ -86,12 +93,14 @@ public class ChatsActivity extends AppCompatActivity {
                     return;
                 }
                 loggedInUserModel = u;
+                binding.name.setText("Hello, "+ u.name);
             }
         });
+
     }
 
     private void bind_views() {
-        ((ImageView) (findViewById(R.id.btn_pick_user))).setOnClickListener(new View.OnClickListener() {
+    findViewById(R.id.btn_pick_user).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pick_user();
