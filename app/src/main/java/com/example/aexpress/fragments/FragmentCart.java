@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aexpress.activities.CheckoutActivity;
+import com.example.aexpress.activities.MainActivity;
 import com.example.aexpress.adapters.CartAdapter;
 import com.example.aexpress.databinding.ActivityMainBinding;
 import com.example.aexpress.databinding.FragmentCartBinding;
@@ -119,6 +120,7 @@ public class FragmentCart extends Fragment {
                     public void onClick(View view) {
                         // Khôi phục item
                         adapter.restoreItem(recentlyDeletedProduct, recentlyDeletedProductPosition);
+                        MainActivity.countItem();
 
                         // Cập nhật lại subtotal khi item được khôi phục
                         binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));

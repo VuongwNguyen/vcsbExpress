@@ -9,6 +9,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.aexpress.adapters.Counter;
 import com.example.aexpress.adapters.ProductAdapter;
 import com.example.aexpress.databinding.ActivitySearchBinding;
 import com.example.aexpress.model.Product;

@@ -9,6 +9,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.aexpress.adapters.Counter;
 import com.example.aexpress.adapters.ProductAdapter;
 import com.example.aexpress.databinding.ActivityCategoryBinding;
 import com.example.aexpress.model.Product;
@@ -33,7 +34,12 @@ public class CategoryActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         products = new ArrayList<>();
-        productAdapter = new ProductAdapter(this, products);
+//        productAdapter = new ProductAdapter(this, products, new Counter() {
+//            @Override
+//            public void CountItemIntoQuantityCart() {
+//                MainActivity.countItem();
+//            }
+//        });
 
         int catId = getIntent().getIntExtra("catId", 0);
         String categoryName = getIntent().getStringExtra("categoryName");

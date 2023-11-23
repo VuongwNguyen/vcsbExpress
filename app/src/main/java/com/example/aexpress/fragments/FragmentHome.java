@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,6 +22,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.aexpress.R;
+import com.example.aexpress.activities.MainActivity;
 import com.example.aexpress.adapters.ProductAdapter;
 import com.example.aexpress.adapters.ProductCategoryAdapter;
 import com.example.aexpress.databinding.FragmentHomeBinding;
@@ -58,9 +61,14 @@ public class FragmentHome extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        MainActivity.countItem();
         initProductCategory();
         initSlider();
+        Animation animationIn = AnimationUtils.loadAnimation(getContext(),R.anim.flip_in);
+        Animation animationOut = AnimationUtils.loadAnimation(getContext(),R.anim.flip_out);
+        binding.ViewFlipper.setInAnimation(animationIn);
+        binding.ViewFlipper.setOutAnimation(animationOut);
+        binding.ViewFlipper.showNext();
     }
 
     private void initProductCategory() {

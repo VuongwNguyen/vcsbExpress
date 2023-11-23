@@ -91,7 +91,7 @@ public class Product implements Item, Serializable {
 
     @Override
     public BigDecimal getItemPrice() {
-        return new BigDecimal(price-getDiscount());
+        return new BigDecimal(price-discount);
     }
 
     @Override

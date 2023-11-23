@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.aexpress.R;
+import com.example.aexpress.activities.MainActivity;
 import com.example.aexpress.databinding.ItemCartBinding;
 import com.example.aexpress.model.Product;
 import com.hishd.tinycart.model.Cart;
@@ -70,10 +71,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 } else {
                     product.setQuantity(quantity);
                 }
-
                 notifyDataSetChanged();
                 cart.updateItem(product, product.getQuantity());
                 cartListener.onQuantityChanged();
+                MainActivity.countItem();
+
             }
         });
 
@@ -84,10 +86,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 if (quantity > 1)
                     quantity--;
                 product.setQuantity(quantity);
-
                 notifyDataSetChanged();
                 cart.updateItem(product, product.getQuantity());
                 cartListener.onQuantityChanged();
+                MainActivity.countItem();
             }
         });
     }
@@ -97,6 +99,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         cart.removeItem(productToRemove);
         products.remove(position);
         notifyItemRemoved(position);
+        MainActivity.countItem();
         notifyDataSetChanged();
     }
 
@@ -105,6 +108,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         products.add(position, product);
         notifyItemInserted(position);
         notifyItemRangeChanged(position, products.size());
+        MainActivity.countItem();
         notifyDataSetChanged();
     }
 

@@ -34,6 +34,8 @@ android {
 
 
 dependencies {
+    implementation 'androidx.core:core:latest_version'
+    implementation 'androidx.media:media:latest_version'
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
@@ -65,17 +67,21 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.github.hishd:TinyCart:1.0.1'
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
-
+/* Animation Load */
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
-
-    implementation 'com.mikhaellopez:circularimageview:3.0.0'          // circle image view
-
+/* Circle Avatar*/
+    implementation 'com.mikhaellopez:circularimageview:3.0.0'
     //room
     implementation 'androidx.room:room-runtime:2.6.0'               //database
     annotationProcessor 'androidx.room:room-compiler:2.6.0'
-
-
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'          //http library
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'    //coverter
     implementation 'com.balysv:material-ripple:1.0.2'
+/* Supper Toast */
+
+        implementation 'io.github.muddz:styleabletoast:2.4.0'
+
+
+
+
 }

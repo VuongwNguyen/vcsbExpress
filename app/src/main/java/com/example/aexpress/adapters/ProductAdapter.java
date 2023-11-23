@@ -1,9 +1,7 @@
 package com.example.aexpress.adapters;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
-import android.app.Dialog;
+
+
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import android.view.Window;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -20,11 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.aexpress.R;
+import com.example.aexpress.activities.MainActivity;
 import com.example.aexpress.databinding.DetailsProductDialogBinding;
-import com.example.aexpress.databinding.DialogConfirmBinding;
 import com.example.aexpress.databinding.ItemProductBinding;
 import com.example.aexpress.model.Product;
-import com.google.android.material.snackbar.Snackbar;
 import com.hishd.tinycart.model.Cart;
 import com.hishd.tinycart.model.Item;
 import com.hishd.tinycart.util.TinyCartHelper;
@@ -33,6 +30,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Map;
 
+import io.github.muddz.styleabletoast.StyleableToast;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     Context context;
@@ -47,6 +45,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.products = products;
         cart = TinyCartHelper.getCart();
         this.handler = new Handler(Looper.getMainLooper());
+
     }
 
     @NonNull
@@ -60,9 +59,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 //        Collections.shuffle(products);
         holder.binding.shimmerLayout.startShimmer();
         Product product = products.get(position);
-
-
-
 
         handler.postDelayed(() -> {
             if (product.getDiscount() != 0) {
@@ -87,8 +83,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                     }
                     detailsProductDialogBinding.tvNameProduct.setText(product.getName());
                     detailsProductDialogBinding.productDescription.setText(Html.fromHtml(product.getDescription()));
-                    detailsProductDialogBinding.tvPriceProduct.setText(product.getPrice() - product.getDiscount() + "");
-                    detailsProductDialogBinding.tvDiscountProduct.setText(Html.fromHtml("<s>" + product.getPrice() + "</s>"));
+                    detailsProductDialogBinding.tvPriceProduct.setText(Html.fromHtml(decimalFormat.format(product.getItemPrice())));
+                    detailsProductDialogBinding.tvDiscountProduct.setText(Html.fromHtml("<s>" + decimalFormat.format(product.getPrice()) + "</s>"));
                     detailsProductDialogBinding.tvStock.setText("Current also: " + product.getStock() + " Cups");
                     detailsProductDialogBinding.ratingBar.setRating((float) Math.random() * 5);
                     Glide.with(detailsProductDialogBinding.getRoot()).load(product.getImage()).into(detailsProductDialogBinding.productImage);
@@ -113,25 +109,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                             detailsProductDialogBinding.addToCartBtn.setEnabled(false);
                             detailsProductDialogBinding.addToCartBtn.setText("Added in cart");
                             dialog.dismiss();
-                            DialogConfirmBinding dialogConfirmBinding = DialogConfirmBinding.inflate(LayoutInflater.from(context));
-                            final Dialog dialogConfirm = new Dialog(context);
-                            dialogConfirm.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                            dialogConfirm.setContentView(dialogConfirmBinding.getRoot());
-                            dialogConfirmBinding.dialogNamesp.setText(product.getName());
-                            Glide.with(dialogConfirmBinding.getRoot()).load(product.getImage()).into(dialogConfirmBinding.dialogIv);
-                            dialogConfirm.show();
-                            dialog.dismiss();
-                            View dialogView = dialogConfirm.getWindow().getDecorView();
-                            ObjectAnimator fadeOut = ObjectAnimator.ofFloat(dialogView, "alpha", 1f, 0f);
-                            fadeOut.setDuration(1000);
-                            fadeOut.addListener(new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    super.onAnimationEnd(animation);
-                                    dialogConfirm.dismiss();
-                                }
-                            });
-                            fadeOut.start();
+                            MainActivity.countItem();
+                            StyleableToast.makeText(context, "Item '"+product.getName()+"' Was Added To The Cart", Toast.LENGTH_LONG,R.style.mytoast).show();
                         }
                     });
                     dialog.show();

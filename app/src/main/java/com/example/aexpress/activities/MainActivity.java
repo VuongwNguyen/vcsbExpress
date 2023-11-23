@@ -4,9 +4,8 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.speech.RecognizerIntent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +14,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -25,6 +25,7 @@ import com.example.aexpress.databinding.ActivityMainBinding;
 import com.example.aexpress.fragments.FragmentCart;
 import com.example.aexpress.fragments.FragmentCategory;
 import com.example.aexpress.fragments.FragmentHome;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hishd.tinycart.model.Cart;
 import com.hishd.tinycart.model.Item;
 import com.hishd.tinycart.util.TinyCartHelper;
@@ -39,30 +40,21 @@ public class MainActivity extends AppCompatActivity {
     Cart cart;
     int itemCount;
 
+    public static TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        /* cái này nó bị thiểu năng nè :))))))) */
-        Handler handler = new Handler(Looper.getMainLooper());
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                countItem(binding.quantity);
-                handler.postDelayed(this, 2000);
-            }
-        };
-        handler.postDelayed(runnable, 2000);
-        /* đừng thắc sao tui làm z tại nó chạy dc là dc :))
-         *
-         *
-         * máy yếu gặp cái này là hết nước chấm =))) */
+        textView = binding.quantity;
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new FragmentHome()).commit();
 
         binding.ivCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(new FragmentCart());
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new FragmentCart()).commit();
+
             }
         });
         binding.searchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
@@ -85,30 +77,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        replaceFragment(new FragmentHome());
-        binding.bottomnavigation.setOnNavigationItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.home){
-                replaceFragment(new FragmentHome());
-                return true;
-            } else if (item.getItemId()==R.id.categories) {
-                replaceFragment(new FragmentCategory());
-                return true;
-            } else if (item.getItemId() == R.id.history) {
-                startActivity(new Intent(MainActivity.this, StartActivity.class));
-                return true;
+        binding.bottomnavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            Fragment fragment;
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.home) {
+                    fragment = new FragmentHome();
+                } else if (item.getItemId() == R.id.categories) {
+                    fragment = new FragmentCategory();
+                } else if (item.getItemId() == R.id.history) {
+                    fragment = null;
+                    startActivity(new Intent(MainActivity.this, StartActivity.class));
+                }
+                if (fragment != null) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
+                    return true;
+                }
+                countItem();
+                return false;
             }
-            return false;
         });
-        replaceFragment(new FragmentHome());
     }
 
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment, fragment);
-        fragmentTransaction.commit();
-    }
+
 
     private void startTextFromSpeech() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -142,9 +133,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-    public void countItem(TextView textView) {
-        itemCount = 0;
-        cart = TinyCartHelper.getCart();
+    public static void countItem() {
+        int itemCount = 0;
+        Cart cart = TinyCartHelper.getCart();
         Map<Item, Integer> itemWithQty = cart.getAllItemsWithQty();
         for (int quantity : itemWithQty.values()) {
             itemCount += quantity;
