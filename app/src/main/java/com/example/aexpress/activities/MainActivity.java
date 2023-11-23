@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
          *
          *
          * máy yếu gặp cái này là hết nước chấm =))) */
+
         binding.ivCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

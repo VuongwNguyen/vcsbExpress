@@ -23,7 +23,7 @@
             style="@style/MaterialSearchBarLight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="9"
+            android:layout_weight="1"
             app:mt_hint="Search your favorite product"
             app:mt_maxSuggestionsCount="10"
             app:mt_placeholder="aExpress"
@@ -35,12 +35,10 @@
             android:layout_marginLeft="10sp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_alignParentBottom="true"
                 android:id="@+id/icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,12 +47,12 @@
             <TextView
                 android:id="@+id/quantity"
                 android:textColor="@color/white"
-                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/icon"
                 android:layout_alignParentTop="true"
+                android:textSize="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_quantity"
-                android:padding="5sp"
                 android:text="2" />
         </RelativeLayout>
     </LinearLayout>
