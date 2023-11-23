@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:background="@color/orange"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/orange"
     android:gravity="center"
-    android:padding="20sp"
-    android:layout_height="wrap_content">
-<com.mikhaellopez.circularimageview.CircularImageView
-    android:layout_width="30sp"
-    android:id="@+id/ivConfirm"
-    android:src="@drawable/ic_check_circle"
-    android:layout_height="wrap_content"/>
+    android:orientation="horizontal"
+    android:padding="20sp">
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/ivConfirm"
+        android:layout_width="30sp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_check_circle" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:text="succes!"
         android:id="@+id/textConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="succes!"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:layout_height="wrap_content"/>
+        android:textSize="20sp" />
 </LinearLayout>
