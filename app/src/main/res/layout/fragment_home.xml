@@ -40,9 +40,12 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvProductCate"
+                android:stateListAnimator="@animator/menu_to_back_rotation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />
+                tools:listitem="@layout/item_product"
+                android:layout_marginTop="16dp"/>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

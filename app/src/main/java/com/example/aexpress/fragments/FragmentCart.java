@@ -15,10 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aexpress.activities.CheckoutActivity;
 import com.example.aexpress.adapters.CartAdapter;
+import com.example.aexpress.databinding.ActivityMainBinding;
 import com.example.aexpress.databinding.FragmentCartBinding;
 import com.example.aexpress.model.Product;
 import com.google.android.material.snackbar.Snackbar;
@@ -82,6 +84,8 @@ public class FragmentCart extends Fragment {
                 binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));
                 binding.subtotal.setText(decimalFormat.format(cart.getTotalPrice()));
             }
+
+
         });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

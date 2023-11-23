@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -85,6 +86,8 @@ public class CheckoutActivity extends AppCompatActivity {
             public void onQuantityChanged() {
                 binding.subtotal.setText(String.format(decimalFormat.format(cart.getTotalPrice())));
             }
+
+
         });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
