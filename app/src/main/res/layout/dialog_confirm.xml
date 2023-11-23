@@ -1,23 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/orange"
-    android:gravity="center"
+    android:background="#BFFF5722"
     android:orientation="horizontal"
     android:padding="20sp">
 
+    <ImageView
+        android:layout_marginRight="20dp"
+        android:id="@+id/dialog_iv"
+        android:layout_width="62dp"
+        android:layout_height="62dp"/>
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/dialog_iv"
+        android:text="XXXXXXXXX"
+        android:textSize="18dp"
+        android:textColor="@color/white"
+        android:id="@+id/dialog_namesp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <com.mikhaellopez.circularimageview.CircularImageView
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/dialog_namesp"
+        android:layout_toRightOf="@id/dialog_iv"
         android:id="@+id/ivConfirm"
         android:layout_width="30sp"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_check_circle" />
 
     <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/ivConfirm"
+        android:layout_below="@id/dialog_namesp"
         android:id="@+id/textConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="succes!"
         android:textColor="@color/white"
         android:textSize="20sp" />
-</LinearLayout>
+</RelativeLayout>

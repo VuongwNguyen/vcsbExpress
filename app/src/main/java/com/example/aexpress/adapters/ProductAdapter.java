@@ -117,7 +117,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                             final Dialog dialogConfirm = new Dialog(context);
                             dialogConfirm.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             dialogConfirm.setContentView(dialogConfirmBinding.getRoot());
-                            dialogConfirmBinding.textConfirm.setText("Added To Cart!");
+                            dialogConfirmBinding.dialogNamesp.setText(product.getName());
+                            Glide.with(dialogConfirmBinding.getRoot()).load(product.getImage()).into(dialogConfirmBinding.dialogIv);
                             dialogConfirm.show();
                             dialog.dismiss();
                             View dialogView = dialogConfirm.getWindow().getDecorView();
