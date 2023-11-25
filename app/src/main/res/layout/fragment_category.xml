@@ -38,17 +38,24 @@
                     android:layout_margin="10dp" />
             </androidx.cardview.widget.CardView>
 
-
-            <TextView
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/tvNameCategory"
+            <ViewFlipper
+                android:id="@+id/viewflipper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="All Products"
-                android:gravity="center"
-                android:textSize="25dp"
-                android:textStyle="bold" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:background="@color/orange_A700"
+                    android:textColor="@color/white"
+                    android:id="@+id/tvNameCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="All Products"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+            </ViewFlipper>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listDetailsCategories"

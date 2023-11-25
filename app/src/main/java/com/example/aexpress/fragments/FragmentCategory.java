@@ -1,16 +1,18 @@
 package com.example.aexpress.fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -69,10 +71,33 @@ public class FragmentCategory extends Fragment {
     }
 
     void initCategories() {
+        Animation animationIn = AnimationUtils.loadAnimation(getContext(), R.anim.flip_in);
+        Animation animationOut = AnimationUtils.loadAnimation(getContext(),R.anim.flip_out);
         categories = new ArrayList<>();
         getCategories();
         categoryAdapter = new CategoryAdapter(getContext(), categories, binding.listDetailsCategories, binding.tvNameCategory);
+        binding.tvNameCategory.addTextChangedListener(new TextWatcher() {
 
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+               binding.viewflipper.setInAnimation(animationIn);
+               binding.viewflipper.setOutAnimation(animationOut);
+               binding.viewflipper.showNext();
+            }
+        });
+        binding.viewflipper.setInAnimation(animationIn);
+        binding.viewflipper.setOutAnimation(animationOut);
+        binding.viewflipper.showNext();
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
         binding.categoriesList.setLayoutManager(layoutManager);
         binding.categoriesList.setAdapter(categoryAdapter);
