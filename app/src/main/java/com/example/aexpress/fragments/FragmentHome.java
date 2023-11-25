@@ -63,12 +63,12 @@ public class FragmentHome extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         MainActivity.countItem();
         initProductCategory();
-        initSlider();
-        Animation animationIn = AnimationUtils.loadAnimation(getContext(),R.anim.flip_in);
-        Animation animationOut = AnimationUtils.loadAnimation(getContext(),R.anim.flip_out);
-        binding.ViewFlipper.setInAnimation(animationIn);
-        binding.ViewFlipper.setOutAnimation(animationOut);
-        binding.ViewFlipper.showNext();
+        getRecentOffers();
+//        Animation animationIn = AnimationUtils.loadAnimation(getContext(),R.anim.flip_in);
+//        Animation animationOut = AnimationUtils.loadAnimation(getContext(),R.anim.flip_out);
+//        binding.ViewFlipper.setInAnimation(animationIn);
+//        binding.ViewFlipper.setOutAnimation(animationOut);
+//        binding.ViewFlipper.showNext();
     }
 
     private void initProductCategory() {
@@ -157,45 +157,10 @@ public class FragmentHome extends Fragment {
 
 
 
-    private void initSlider() {
-        getRecentOffers();
-    }
 
-//    public void getRecentProducts() {
-//        RequestQueue queue = Volley.newRequestQueue(getContext());
-//
-//        String url = Constants.GET_PRODUCTS_URL + "?count=8";
-//        StringRequest request = new StringRequest(Request.Method.GET, url, response -> {
-//            try {
-//                JSONObject object = new JSONObject(response);
-//                if (object.getString("status").equals("success")) {
-//                    JSONArray productsArray = object.getJSONArray("products");
-//                    for (int i = 0; i < productsArray.length(); i++) {
-//                        JSONObject childObj = productsArray.getJSONObject(i);
-//                        Product product = new Product(
-//                                childObj.getString("name"),
-//                                Constants.PRODUCTS_IMAGE_URL + childObj.getString("image"),
-//                                childObj.getString("status"),
-//                                childObj.getDouble("price"),
-//                                childObj.getDouble("price_discount"),
-//                                childObj.getInt("stock"),
-//                                childObj.getInt("id"),
-//                                childObj.getString("description")
-//                        );
-//                        products.add(product);
-//                    }
-//                    productAdapter.notifyDataSetChanged();
-//                }
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }, error -> {
-//        });
-//
-//        queue.add(request);
-//    }
 
-    void getRecentOffers() {
+
+    private void getRecentOffers() {
         StringRequest request = new StringRequest(Request.Method.GET, Constants.GET_OFFERS_URL, response -> {
             try {
                 JSONObject object = new JSONObject(response);

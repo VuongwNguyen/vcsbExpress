@@ -70,7 +70,7 @@ public class FragmentCategory extends Fragment {
         binding.listDetailsCategories.setAdapter(productAdapter);
     }
 
-    void initCategories() {
+    private void initCategories() {
         Animation animationIn = AnimationUtils.loadAnimation(getContext(), R.anim.flip_in);
         Animation animationOut = AnimationUtils.loadAnimation(getContext(),R.anim.flip_out);
         categories = new ArrayList<>();
@@ -103,7 +103,7 @@ public class FragmentCategory extends Fragment {
         binding.categoriesList.setAdapter(categoryAdapter);
     }
 
-    public void getCategories() {
+    private void getCategories() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
         StringRequest request = new StringRequest(Request.Method.GET, Constants.GET_CATEGORIES_URL, new Response.Listener<String>() {
@@ -144,7 +144,7 @@ public class FragmentCategory extends Fragment {
         queue.add(request);
     }
 
-    public void getRecentProducts() {
+    private void getRecentProducts() {
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
         String url = Constants.GET_PRODUCTS_URL + "?count=200";
