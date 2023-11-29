@@ -19,7 +19,7 @@ public class StartActivity extends AppCompatActivity {
     public static final String USERS_TABLE = "USERS_TABLE";
     public static final String MESSAGES_TABLE = "MESSAGES_TABLE";
 
-    public static final String BASE_URL = "https://jugal-hit.000webhostapp.com/whatsapp/";
+    public static final String BASE_URL = "https://vcsbexpress.id.vn/whatsapp/";
     DatabaseRepository databaseRepository;
 
     @Override

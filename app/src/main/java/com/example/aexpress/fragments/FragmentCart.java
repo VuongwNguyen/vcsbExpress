@@ -66,12 +66,10 @@ public class FragmentCart extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         Locale locale = new Locale("vi", "VN");
-
         products = new ArrayList<>();
-
         Cart cart = TinyCartHelper.getCart();
-
         for (Map.Entry<Item, Integer> item : cart.getAllItemsWithQty().entrySet()) {
             Product product = (Product) item.getKey();
             int quantity = item.getValue();
@@ -81,12 +79,9 @@ public class FragmentCart extends Fragment {
         adapter = new CartAdapter(getContext(), products, new CartAdapter.CartListener() {
             @Override
             public void onQuantityChanged() {
-
                 binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));
                 binding.subtotal.setText(decimalFormat.format(cart.getTotalPrice()));
             }
-
-
         });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -94,7 +89,6 @@ public class FragmentCart extends Fragment {
         binding.cartList.setLayoutManager(layoutManager);
         binding.cartList.addItemDecoration(itemDecoration);
         binding.cartList.setAdapter(adapter);
-
         binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));
         binding.subtotal.setText(decimalFormat.format(cart.getTotalPrice()));
 
@@ -128,7 +122,6 @@ public class FragmentCart extends Fragment {
                     }
                 });
                 snackbar.show();
-
                 // Cập nhật lại subtotal
                 binding.subtotal.setText(NumberFormat.getCurrencyInstance(locale).format(cart.getTotalPrice()));
                 binding.subtotal.setText(decimalFormat.format(cart.getTotalPrice()));

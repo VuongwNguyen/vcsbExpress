@@ -1,7 +1,6 @@
 package com.example.aexpress.adapters;
 
 
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -31,13 +29,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import io.github.muddz.styleabletoast.StyleableToast;
+
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     Context context;
     ArrayList<Product> products;
     Cart cart;
     DecimalFormat decimalFormat;
-    DetailsProductDialogBinding detailsProductDialogBinding;
     Handler handler;
 
     public ProductAdapter(Context context, ArrayList<Product> products) {
@@ -45,7 +43,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.products = products;
         cart = TinyCartHelper.getCart();
         this.handler = new Handler(Looper.getMainLooper());
-
     }
 
     @NonNull
@@ -110,7 +107,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                             detailsProductDialogBinding.addToCartBtn.setText("Added in cart");
                             dialog.dismiss();
                             MainActivity.countItem();
-                            StyleableToast.makeText(context, "Item '"+product.getName()+"' Was Added To The Cart", Toast.LENGTH_LONG,R.style.mytoast).show();
+                            StyleableToast.makeText(context, "Item '" + product.getName() + "' Was Added To The Cart", Toast.LENGTH_LONG, R.style.mytoast).show();
                         }
                     });
                     dialog.show();
