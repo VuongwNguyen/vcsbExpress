@@ -43,8 +43,7 @@ public class FragmentHome extends Fragment {
     ArrayList<ProductCategory> ProductCate;
     ProductCategoryAdapter adapter;
 
-    public FragmentHome() {
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,11 +63,6 @@ public class FragmentHome extends Fragment {
         MainActivity.countItem();
         initProductCategory();
         getRecentOffers();
-//        Animation animationIn = AnimationUtils.loadAnimation(getContext(),R.anim.flip_in);
-//        Animation animationOut = AnimationUtils.loadAnimation(getContext(),R.anim.flip_out);
-//        binding.ViewFlipper.setInAnimation(animationIn);
-//        binding.ViewFlipper.setOutAnimation(animationOut);
-//        binding.ViewFlipper.showNext();
     }
 
     private void initProductCategory() {

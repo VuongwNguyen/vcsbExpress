@@ -37,8 +37,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    Cart cart;
-    int itemCount;
+
 
     public static TextView textView;
 

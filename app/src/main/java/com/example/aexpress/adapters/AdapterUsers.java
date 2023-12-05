@@ -86,17 +86,10 @@ public class AdapterUsers extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private static final String TAG = "AdapterUsers";
 
     private String formatPhoneNumber(String phoneNumber) {
-        // Kiểm tra xem số điện thoại có ít nhất 3 ký tự hay không
         if (phoneNumber.length() < 3) {
-            return phoneNumber; // Không thay đổi nếu không đủ 3 ký tự
+            return phoneNumber;
         }
-
-        // Lấy 3 số cuối của số điện thoại
-        String lastThreeDigits = phoneNumber.substring(phoneNumber.length() - 3);
-
-        // Tạo một chuỗi mới với *** thay thế 3 số cuối
         String formattedPhoneNumber = phoneNumber.substring(0, phoneNumber.length() - 3) + "***";
-
         return formattedPhoneNumber;
     }
 }

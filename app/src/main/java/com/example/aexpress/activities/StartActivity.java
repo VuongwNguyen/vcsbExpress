@@ -27,9 +27,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         databaseRepository = new DatabaseRepository(this);
-
         check_login();
-
     }
 
     private void check_login() {
