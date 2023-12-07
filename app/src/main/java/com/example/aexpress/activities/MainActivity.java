@@ -1,10 +1,13 @@
 package com.example.aexpress.activities;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -25,7 +28,10 @@ import com.example.aexpress.databinding.ActivityMainBinding;
 import com.example.aexpress.fragments.FragmentCart;
 import com.example.aexpress.fragments.FragmentCategory;
 import com.example.aexpress.fragments.FragmentHome;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.hishd.tinycart.model.Cart;
 import com.hishd.tinycart.model.Item;
 import com.hishd.tinycart.util.TinyCartHelper;
@@ -35,10 +41,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
     ActivityMainBinding binding;
-
-
     public static TextView textView;
 
     @Override
@@ -46,6 +49,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+                        System.out.println(token);
+
+                        // Log and toast
+                        Toast.makeText(MainActivity.this, ""+token, Toast.LENGTH_SHORT).show();
+                    }
+                });
         textView = binding.quantity;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new FragmentHome()).commit();
 

@@ -66,7 +66,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
         progressDialog.setMessage("Processing...");
 
         products = new ArrayList<>();
@@ -284,7 +284,7 @@ public class CheckoutActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                System.out.println(error.toString());
             }
         }) {
             @Override
